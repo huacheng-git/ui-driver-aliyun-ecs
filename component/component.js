@@ -101,7 +101,7 @@ export default Ember.Component.extend(NodeDriver, {
         diskSize:           '0'
       });
 
-      set(this, 'model.engineInstallURL', 'https://dev-tool.oss-cn-shenzhen.aliyuncs.com/docker-install/18.09.sh');
+      set(this, 'model.engineInstallURL', 'https://rancher2-drivers.oss-cn-beijing.aliyuncs.com/pandaria/docker-install/19.03-aliyun.sh');
       set(this,'model.engineStorageDriver', 'overlay2')
       set(this, 'model.%%DRIVERNAME%%Config', config);
     }
@@ -277,10 +277,6 @@ export default Ember.Component.extend(NodeDriver, {
     const number = /[0-9]/.test(sshPassword) ? 1 : 0;
     const special = /[?+*$^().|<>';:\-=\[\]\{\},&%#@!~`\\]/.test(sshPassword) ? 1 : 0;
 
-    if (!name) {
-      errors.push('Name is required');
-    }
-
     if (sshPassword && (sshPassword.length < 8) || sshPassword.length > 30) {
       errors.push(intl.t('nodeDriver.aliyunecs.errors.sshPasswordLengthNotValid'));
     }
@@ -341,7 +337,13 @@ export default Ember.Component.extend(NodeDriver, {
         }
       });
 
-      this.fetch('SecurityGroup', 'SecurityGroups', { RegionId: get(this, 'config.region') }).then((securityGroups) => {
+      const securityGroupsPromise = this.fetch('SecurityGroup', 'SecurityGroups', { RegionId: get(this, 'config.region') });
+
+      if(securityGroupsPromise === undefined) {
+        return;
+      }
+
+      securityGroupsPromise.then((securityGroups) => {
         set(this, 'securityGroups', securityGroups);
         const selectedSecurityGroup = get(this, 'config.securityGroup');
 
@@ -534,6 +536,9 @@ export default Ember.Component.extend(NodeDriver, {
     params.PageNumber = page;
     params.Signature = this.getSignature(secretAccessKey, params);
 
+    if (get(this, 'app.proxyEndpoint') === undefined) {
+      return;
+    }
 
     endpoint = `${ get(this, 'app.proxyEndpoint')  }/${  endpoint.replace('//', '/') }`;
     endpoint = `${ location.origin }${ endpoint }`;
@@ -562,7 +567,11 @@ export default Ember.Component.extend(NodeDriver, {
         }));
 
         if (res.body.TotalCount > ((PAGE_SIZE * (page - 1)) + current.length)) {
-          return this.fetch(resource, plural, externalParams, page + 1)
+          const promise = this.fetch(resource, plural, externalParams, page + 1);
+          if(promise === undefined) {
+            return;
+          }
+          return promise
             .then((array) => {
               results.pushObjects(array);
               resolve(results);
