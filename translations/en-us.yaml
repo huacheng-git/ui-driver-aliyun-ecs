@@ -104,6 +104,7 @@ nodeDriver:
       valueLabel: Tags
       placeholder: e.g. dev
     errors:
+      nameRequired: Name is required
       zoneIdRequired: Available Zone is required.
       vpcIdRequired: VPC is required.
       vswitchIdRequired: VSwitch is required.

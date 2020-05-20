@@ -104,6 +104,7 @@ nodeDriver:
       valueLabel: 标签
       placeholder: '例如: dev'
     errors:
+      nameRequired: 模板名称必须输入
       zoneIdRequired: 请选择可用区
       vpcIdRequired: 请选择专有网络
       vswitchIdRequired: 请选择交换机
