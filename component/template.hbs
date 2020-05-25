@@ -205,7 +205,7 @@
       {{#if (eq step 2)}}
         {{top-errors errors=errors}}
         {{save-cancel
-                save=(action "loadStorageTypes")
+                save=(action "loadInstanceTypes")
                 cancel=(action "cancel")
                 createLabel="nodeDriver.aliyunecs.networkSection.next"
                 savingLabel="nodeDriver.aliyunecs.networkSection.loading"
@@ -214,6 +214,120 @@
     </div>
 
     <div class="{{unless (gte step 3) "hide"}}">
+      {{#accordion-list-item
+              title=(t "nodeDriver.aliyunecs.instanceOptionsSection.label")
+              detail=(t "nodeDriver.aliyunecs.instanceOptionsSection.detail")
+              expandAll=expandAll
+              expand=(action expandFn)
+              expandOnInit=true
+      }}
+        <div class="row">
+          <div class="col span-6">
+            <label class="acc-label">
+              {{t "nodeDriver.aliyunecs.instanceDescription.label"}}
+            </label>
+          {{#input-or-display editable=(eq step 3) value=config.description}}
+            {{input
+                    type="text"
+                    class="form-control"
+                    value=config.description
+                    placeholder=(t "nodeDriver.aliyunecs.instanceDescription.placeholder")
+            }}
+          {{/input-or-display}}
+          </div>
+          <div class="col span-6">
+            <label class="acc-label">
+              {{t "nodeDriver.aliyunecs.instanceType.label"}}
+            </label>
+          {{#input-or-display editable=(eq step 3) value=config.instanceType}}
+            {{new-select
+                    classNames="form-control"
+                    content=instanceTypes
+                    value=config.instanceType
+            }}
+          {{/input-or-display}}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col span-6">
+            <label class="acc-label">
+              {{t "nodeDriver.aliyunecs.systemImage.label"}}
+            </label>
+            {{#input-or-display editable=(eq step 3) value=config.imageId}}
+            {{new-select
+                    classNames="form-control"
+                    content=images
+                    optionValuePath="value"
+                    value=config.imageId
+            }}
+            {{/input-or-display}}
+          </div>
+          <div class="col span-6">
+            <label class="acc-label">
+              {{t "nodeDriver.aliyunecs.internetMaxBandwidth.label"}}
+            </label>
+            <div class="input-group">
+              {{#if (eq step 3)}}
+                {{input-integer
+                        min=1
+                        max=100
+                        class="form-control"
+                        value=config.internetMaxBandwidth
+                        placeholder=(t "nodeDriver.aliyunecs.internetMaxBandwidth.placeholder")
+                }}
+                <div class="input-group-addon bg-default">Mbps</div>
+              {{else}}
+                {{config.internetMaxBandwidth}} Mbps
+              {{/if}}
+
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col span-6">
+            <label class="acc-label">
+              {{t "nodeDriver.aliyunecs.aliyunSLB.label"}}
+            </label>
+            {{#input-or-display editable=(eq step 3) value=config.slbId}}
+            {{input
+                    type="text"
+                    class="form-control"
+                    value=config.slbId
+                    placeholder=(t "nodeDriver.aliyunecs.aliyunSLB.placeholder")
+            }}
+            {{/input-or-display}}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col span-6">
+            {{#if (eq step 3)}}
+              {{form-value-array
+                      initialValues=config.tag
+                      addActionLabel="nodeDriver.aliyunecs.tags.addActionLabel"
+                      valueLabel="nodeDriver.aliyunecs.tags.valueLabel"
+                      valuePlaceholder="nodeDriver.aliyunecs.tags.placeholder"
+                      changed=(action (mut config.tag))
+              }}
+            {{/if}}
+          </div>
+        </div>
+      {{/accordion-list-item}}
+
+    {{#if (eq step 3)}}
+      {{top-errors errors=errors}}
+      {{save-cancel
+              save=(action "loadStorageTypes")
+              cancel=(action "cancel")
+              createLabel="nodeDriver.aliyunecs.instanceSection.next"
+              savingLabel="nodeDriver.aliyunecs.instanceSection.loading"
+      }}
+    {{/if}}
+    </div>
+
+    <div class="{{unless (gte step 4) "hide"}}">
       {{#accordion-list-item
               title=(t "nodeDriver.aliyunecs.storageSection.label")
               detail=(t "nodeDriver.aliyunecs.storageSection.detail")
@@ -226,12 +340,13 @@
             <label class="acc-label">
               {{t "nodeDriver.aliyunecs.systemDiskCategory.label"}}
             </label>
-            {{#input-or-display editable=(eq step 3) value=config.systemDiskCategory}}
+            {{#input-or-display editable=(eq step 4) value=config.systemDiskCategory}}
               {{new-select
                       classNames="form-control"
-                      content=diskCategoryChoices
+                      content=systemDiskChoices
                       optionLabelPath="label"
                       optionValuePath="value"
+                      localizedLabel=true
                       value=config.systemDiskCategory
               }}
             {{/input-or-display}}
@@ -240,7 +355,7 @@
             <label class="acc-label">
               {{t "nodeDriver.aliyunecs.systemDiskSize.label"}}
             </label>
-            {{#input-or-display editable=(eq step 3) value=config.systemDiskSize}}
+            {{#input-or-display editable=(eq step 4) value=config.systemDiskSize}}
               <div class="input-group">
                 {{input-integer
                         min=20
@@ -260,12 +375,13 @@
             <label class="acc-label">
               {{t "nodeDriver.aliyunecs.dataDiskCategory.label"}}
             </label>
-            {{#input-or-display editable=(eq step 3) value=config.diskCategory}}
+            {{#input-or-display editable=(eq step 4) value=config.diskCategory}}
               {{new-select
                       classNames="form-control"
-                      content=diskCategoryChoices
+                      content=dataDiskChoices
                       optionLabelPath="label"
                       optionValuePath="value"
+                      localizedLabel=true
                       value=config.diskCategory
               }}
             {{/input-or-display}}
@@ -274,7 +390,7 @@
             <label class="acc-label">
               {{t "nodeDriver.aliyunecs.dataDiskSize.label"}}
             </label>
-            {{#input-or-display editable=(eq step 3) value=config.diskSize}}
+            {{#input-or-display editable=(eq step 4) value=config.diskSize}}
               <div class="input-group">
                 {{input-integer
                         min=0
@@ -286,105 +402,6 @@
                 <div class="input-group-addon bg-default">GB</div>
               </div>
             {{/input-or-display}}
-          </div>
-        </div>
-      {{/accordion-list-item}}
-
-      {{#if (eq step 3)}}
-        {{top-errors errors=errors}}
-        {{save-cancel
-                save=(action "loadInstanceTypes")
-                cancel=(action "cancel")
-                createLabel="nodeDriver.aliyunecs.storageSection.next"
-                savingLabel="nodeDriver.aliyunecs.storageSection.loading"
-        }}
-      {{/if}}
-    </div>
-
-    <div class="{{unless (gte step 4) "hide"}}">
-      {{#accordion-list-item
-              title=(t "nodeDriver.aliyunecs.instanceOptionsSection.label")
-              detail=(t "nodeDriver.aliyunecs.instanceOptionsSection.detail")
-              expandAll=expandAll
-              expand=(action expandFn)
-              expandOnInit=true
-      }}
-        <div class="row">
-          <div class="col span-6">
-            <label class="acc-label">
-              {{t "nodeDriver.aliyunecs.instanceDescription.label"}}
-            </label>
-            {{input
-                    type="text"
-                    class="form-control"
-                    value=config.description
-                    placeholder=(t "nodeDriver.aliyunecs.instanceDescription.placeholder")
-            }}
-          </div>
-          <div class="col span-6">
-            <label class="acc-label">
-              {{t "nodeDriver.aliyunecs.instanceType.label"}}
-            </label>
-            {{new-select
-                    classNames="form-control"
-                    content=instanceTypes
-                    value=config.instanceType
-            }}
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col span-6">
-            <label class="acc-label">
-              {{t "nodeDriver.aliyunecs.systemImage.label"}}
-            </label>
-            {{new-select
-                    classNames="form-control"
-                    content=images
-                    optionValuePath="value"
-                    value=config.imageId
-            }}
-          </div>
-          <div class="col span-6">
-            <label class="acc-label">
-              {{t "nodeDriver.aliyunecs.internetMaxBandwidth.label"}}
-            </label>
-            <div class="input-group">
-              {{input-integer
-                      min=1
-                      max=100
-                      class="form-control"
-                      value=config.internetMaxBandwidth
-                      placeholder=(t "nodeDriver.aliyunecs.internetMaxBandwidth.placeholder")
-              }}
-              <div class="input-group-addon bg-default">Mbps</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col span-6">
-            <label class="acc-label">
-              {{t "nodeDriver.aliyunecs.aliyunSLB.label"}}
-            </label>
-            {{input
-                    type="text"
-                    class="form-control"
-                    value=config.slbId
-                    placeholder=(t "nodeDriver.aliyunecs.aliyunSLB.placeholder")
-            }}
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col span-6">
-            {{form-value-array
-                    initialValues=config.tag
-                    addActionLabel="nodeDriver.aliyunecs.tags.addActionLabel"
-                    valueLabel="nodeDriver.aliyunecs.tags.valueLabel"
-                    valuePlaceholder="nodeDriver.aliyunecs.tags.placeholder"
-                    changed=(action (mut config.tag))
-            }}
           </div>
         </div>
       {{/accordion-list-item}}
@@ -417,12 +434,14 @@
               showEngineUrl=showEngineUrl
       }}
 
-      {{top-errors errors=errors}}
-      {{save-cancel
-              save=(action "save")
-              cancel=(action "cancel")
-              editing=editing
-      }}
+      {{#if (eq step 4)}}
+        {{top-errors errors=errors}}
+        {{save-cancel
+                save=(action "save")
+                cancel=(action "cancel")
+                editing=editing
+        }}
+      {{/if}}
     </div>
   {{/accordion-list}}
 </section>

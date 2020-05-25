@@ -33,6 +33,9 @@ nodeDriver:
     aliyunSLB:
       label: Aliyun SLB ID
       placeholder: Aliyun SLB ID
+    instanceSection:
+      next: "Next: Config Storage Options"
+      loading: Loading Storage Types from Aliyun ECS...
     storageSection:
       label: Storage
       detail: Configure the storage for the instances that will be created by this template.
@@ -42,10 +45,12 @@ nodeDriver:
       label: Instance Storage I/O Optimized
       optimized: Optimized
       none: None
-    diskCategory:
-      cloudEfficiency: Ultra Disk
-      cloudEssd: Enhanced SSD (ESSD)
-      cloudSsd: Standard SSD
+    disk:
+      cloud: Ordinary Disk
+      ephemeralSsd: Local SSD Disk
+      efficiency: Ultra Disk
+      ssd: SSD Disk
+      essd: ESSD Disk
     systemDiskCategory:
       label: System Disk Category
     systemDiskSize:
@@ -65,8 +70,8 @@ nodeDriver:
     networkSection:
       label: Network
       detail: Configure the network for the instances that will be created by this template.
-      next: "Next: Config Storage Options"
-      loading: Loading Storage Types from Aliyun ECS...
+      next: "Next: Config Aliyun ECS Instance options"
+      loading: Loading Instance Types and Images from Aliyun ECS...
     routeCIDR:
       label: Route CIDR
       placeholder: e.g. 192.168.1.0/24
