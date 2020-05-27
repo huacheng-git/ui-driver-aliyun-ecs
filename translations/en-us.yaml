@@ -81,9 +81,11 @@ nodeDriver:
     vpcId:
       label: VPC
       prompt: Choose a VPC...
+      default: Default VPC
     vswitchId:
       label: VSwitch
       prompt: Choose a VSwitch...
+      default: Default VSwitch
     privateIp:
       label: Private IP
       placeholder: Private IP in Private Network
