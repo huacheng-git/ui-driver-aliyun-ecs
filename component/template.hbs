@@ -116,7 +116,7 @@
             <label class="acc-label">
               {{t "nodeDriver.aliyunecs.vpcId.label"}}{{field-required}}
             </label>
-            {{#input-or-display editable=(eq step 2) value=config.vpcId}}
+            {{#input-or-display editable=(eq step 2) value=vpcShowValue}}
               {{new-select
                       classNames="form-control"
                       content=vpcs
@@ -156,7 +156,7 @@
             <label class="acc-label">
               {{t "nodeDriver.aliyunecs.vswitchId.label"}}{{field-required}}
             </label>
-            {{#input-or-display editable=(eq step 2) value=config.vswitchId}}
+            {{#input-or-display editable=(eq step 2) value=vswitchShowValue}}
               {{new-select
                       classNames="form-control"
                       content=filteredVSwitches

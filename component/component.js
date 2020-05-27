@@ -25,6 +25,7 @@ const languages = {
   'zh-hans': {"nodeDriver":{"aliyunecs":{"accountSection":{"label":"1. 访问令牌","detail":"配置用于创建阿里云主机的访问令牌","next":"下一步: 认证&配置网络","loading":"正在获取阿里云区域信息..."},"accessKey":{"label":"访问秘钥","placeholder":"阿里云访问秘钥"},"accessKeySecret":{"label":"访问秘钥令牌","placeholder":"阿里云访问秘钥所对应的令牌","provided":"已提供"},"apiEndpoint":{"label":"(可选)阿里云私有部署API地址","placeholder":"阿里云私有部署API地址"},"instanceOptionsSection":{"label":"实例","detail":"设置即将创建的阿里云实例"},"instanceDescription":{"label":"实例描述","placeholder":"该实例的描述"},"instanceType":{"label":"实例类型","placeholder":"实例类型"},"systemImage":{"label":"系统镜像","placeholder":"系统镜像"},"internetMaxBandwidth":{"label":"最大网络带宽","placeholder":"1到100"},"aliyunSLB":{"label":"阿里云SLB ID","placeholder":"阿里云SLB ID"},"instanceSection": {"next":"下一步: 配置存储选项","loading":"正在获取阿里云存储类型..."},"storageSection":{"label":"存储","detail":"配置通过该模版创建的实例的存储选项","next":"下一步: 配置阿里云实例选项","loading":"正在获取主机类型和系统镜像..."},"ioOptimized":{"label":"存储IO优化","optimized":"优化","none":"不优化"},"disk":{"ephemeralSsd": "本地SSD盘","cloud": "普通云盘","efficiency":"高效云盘","ssd":"SSD 云盘","essd":"ESSD 云盘"},"systemDiskCategory":{"label":"系统盘种类"},"systemDiskSize":{"label":"系统磁盘大小","placeholder":"容量范围: 20 ~ 500"},"dataDiskCategory":{"label":"数据盘种类"},"dataDiskSize":{"label":"数据磁盘大小","placeholder":"容量范围: 0 ~ 32768"},"region":{"label":"区域","placeholder":"区域"},"zone":{"label":"可用区","prompt":"选择可用区..."},"networkSection":{"label":"网络","detail":"配置通过该模版创建的实例的网络选项","next":"下一步: 配置阿里云实例选项","loading":"正在获取主机类型和系统镜像..."},"routeCIDR":{"label":"路由CIDR","placeholder":"例如: 192.168.1.0/24"},"vpcId":{"label":"专有网络","prompt":"选择专有网络..."},"vswitchId":{"label":"交换机","prompt":"选择交换机..."},"privateIp":{"label":"私有IP","placeholder":"专用网络中的私有 IP"},"privateAddressOnly":{"label":"仅私网IP"},"internetChargeType":{"label":"带宽计费模式","prompt":"选择计费模式..."},"internetChargeTypes":{"payByTraffic":"按使用流量计费","payByBandwidth":"按固定带宽计费"},"securitySection":{"label":"安全","detail":"选择实例所需要配置的安全组。"},"securityGroup":{"label":"安全组","placeholder":"安全组","prompt":"选择安全组...","defaultCreate":"自动创建<code>{groupName}</code>安全组。"},"sshPassword":{"label":"SSH密码","placeholder":"创建实例后SSH远程登录密码(非必填)","provided":"已提供"},"tags":{"addActionLabel":"添加实例标签","valueLabel":"标签","placeholder":"例如: dev"},"errors":{"nameRequired":"模板名称必须输入","zoneIdRequired":"请选择可用区","vpcIdRequired":"请选择专有网络","vswitchIdRequired":"请选择交换机","accessKeyRequired":"请输入访问秘钥","accessSecretRequired":"请输入访问秘钥令牌","sshPasswordLengthNotValid":"SSH密码的长度应为8至30之间","sshPasswordInvalidCharacter":"SSH密码包含非法字符","sshPasswordFormatError":"SSH密码必须至少包括大写字符，小写字符，数字和特殊字符中的三种","nameNotValidForApp":"根据{appName}主机名规则该名称无效。"}}}}
 };
 const ENDPOINT = 'https://ecs.aliyuncs.com';
+const VPC_ENDPOINT = 'vpc.aliyuncs.com';
 const PAGE_SIZE = 50;
 const DEFAULT_IMAGE = 'ubuntu_16_04_64';
 const DISKS = [
@@ -312,7 +313,12 @@ export default Ember.Component.extend(NodeDriver, {
 
     if (vpcId) {
       this.fetch('VSwitch', 'VSwitches', { RegionId: get(this, 'config.region'), vpcId: get(this, 'config.vpcId') }).then((vswitches) => {
-        set(this, 'vswitches', vswitches);
+        set(this, 'vswitches', vswitches.map((vswitch) => {
+          return {
+            ...vswitch,
+            label: `${ vswitch.raw.VSwitchName } (${ vswitch.value })`
+          };
+        }));
         const selectedVSwitch = get(this, 'config.vswitchId');
 
         if (selectedVSwitch) {
@@ -353,7 +359,13 @@ export default Ember.Component.extend(NodeDriver, {
 
     if (region) {
       this.fetch('Vpc', 'Vpcs', { RegionId: get(this, 'config.region') }).then((vpcs) => {
-        set(this, 'vpcs', vpcs);
+        set(this, 'vpcs', vpcs.map((vpc) => {
+          return {
+            ...vpc,
+            label: `${ vpc.raw.VpcName } (${ vpc.value })`
+          };
+        }));
+
         const selectedVPC = get(this, 'config.vpcId');
 
         if (selectedVPC) {
@@ -431,6 +443,26 @@ export default Ember.Component.extend(NodeDriver, {
 
       return true;
     });
+  }),
+
+  vpcShowValue: computed('intl.locale', 'config.vpcId', function() {
+    const vpcs = get(this, 'vpcs');
+
+    if (vpcs && get(this, 'config.vpcId')) {
+      return get(vpcs.findBy('value', get(this, 'config.vpcId')), 'label');
+    } else {
+      return '';
+    }
+  }),
+
+  vswitchShowValue: computed('intl.locale', 'config.vswitchId', function() {
+    const vswitches = get(this, 'vswitches');
+
+    if (vswitches && get(this, 'config.vswitchId')) {
+      return get(vswitches.findBy('value', get(this, 'config.vswitchId')), 'label');
+    } else {
+      return '';
+    }
   }),
 
   resetVswitch() {
@@ -656,13 +688,19 @@ export default Ember.Component.extend(NodeDriver, {
       Timestamp:        date.toISOString(),
       Version:          '2014-05-26',
     });
-    params.PageSize = PAGE_SIZE;
-    params.PageNumber = page;
-    params.Signature = this.getSignature(secretAccessKey, params);
 
     if (get(this, 'app.proxyEndpoint') === undefined) {
       return;
     }
+
+    if(plural === 'Vpcs' || plural === 'VSwitches') {
+      params.Version = '2016-04-28';
+      endpoint = VPC_ENDPOINT;
+    }
+
+    params.PageSize = PAGE_SIZE;
+    params.PageNumber = page;
+    params.Signature = this.getSignature(secretAccessKey, params);
 
     endpoint = `${ get(this, 'app.proxyEndpoint')  }/${  endpoint.replace('//', '/') }`;
     endpoint = `${ location.origin }${ endpoint }`;
