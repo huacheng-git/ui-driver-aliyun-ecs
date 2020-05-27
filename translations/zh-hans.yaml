@@ -61,6 +61,9 @@ nodeDriver:
     dataDiskSize:
       label: 数据磁盘大小
       placeholder: "容量范围: 0 ~ 32768"
+    resourceGroup:
+      label: 资源组
+      all: 账号全部资源
     region:
       label: 区域
       placeholder: 区域

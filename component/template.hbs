@@ -84,6 +84,24 @@
         <div class="row">
           <div class="col span-6">
             <label class="acc-label">
+              {{t "nodeDriver.aliyunecs.resourceGroup.label"}}
+            </label>
+            {{#input-or-display
+                    editable=(eq step 2)
+                    value=resourceGroupShowValue
+            }}
+              {{new-select
+                      class="form-control"
+                      content=resourceGroupChoices
+                      value=resourceGroupId
+              }}
+            {{/input-or-display}}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col span-6">
+            <label class="acc-label">
               {{t "nodeDriver.aliyunecs.region.label"}}
             </label>
             {{#input-or-display editable=(eq step 2) value=config.region}}

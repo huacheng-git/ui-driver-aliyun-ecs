@@ -21,10 +21,11 @@ const next         = Ember.run.next;
 /*!!!!!!!!!!!GLOBAL CONST END!!!!!!!!!!!*/
 
 const languages = {
-  'en-us':   {"nodeDriver":{"aliyunecs":{"accountSection":{"label":"1. Account Access","detail":"API Keys will be used to launch Aliyun ECS Instances.","next":"Next: Authenticate & Config network options","loading":"Loading Regions from Aliyun ECS..."},"accessKey":{"label":"Access Key","placeholder":"Your Aliyun Account Access Key"},"accessKeySecret":{"label":"Access Key Secret","placeholder":"Your Aliyun Account Access Key Secret","provided":"Provided"},"apiEndpoint":{"label":"API Endpoint (Optional)","placeholder":"Private Aliyun API Server Endpoint"},"instanceOptionsSection":{"label":"Instance","detail":"Customize the Aliyun ECS Instance that will be created."},"instanceDescription":{"label":"Instance Description","placeholder":"Instance Description"},"instanceType":{"label":"Instance Type","placeholder":"Instance Type"},"systemImage":{"label":"System image","placeholder":"System image"},"internetMaxBandwidth":{"label":"Internet Max Bandwidth","placeholder":"1 to 100"},"aliyunSLB":{"label":"Aliyun SLB ID","placeholder":"Aliyun SLB ID"},"instanceSection": {"next": "Next: Config Storage Options","loading":"Loading Storage Types from Aliyun ECS..."},"storageSection":{"label":"Storage","detail":"Configure the storage for the instances that will be created by this template.","next":"Next: Config Aliyun ECS Instance options","loading":"Loading Instance Types and Images from Aliyun ECS..."},"ioOptimized":{"label":"Instance Storage I/O Optimized","optimized":"Optimized","none":"None"},"disk":{"ephemeralSsd":"Local SSD Disk","cloud":"Ordinary Disk","efficiency":"Ultra Disk","ssd":"SSD Disk","essd":"ESSD Disk"},"systemDiskCategory":{"label":"System Disk Category"},"systemDiskSize":{"label":"System Disk Size","placeholder":"Disk Capacity: 20 ~ 500"},"dataDiskCategory":{"label":"Data Disk Category"},"dataDiskSize":{"label":"Data Disk Size","placeholder":"Disk Capacity: 20 ~ 32768"},"region":{"label":"Region","placeholder":"Region"},"zone":{"label":"Available Zone","prompt":"Choose a Available Zone..."},"networkSection":{"label":"Network","detail":"Configure the network for the instances that will be created by this template.","next":"Next: Config Aliyun ECS Instance options","loading":"Loading Instance Types and Images from Aliyun ECS..."},"routeCIDR":{"label":"Route CIDR","placeholder":"e.g. 192.168.1.0/24"},"vpcId":{"label":"VPC","prompt":"Choose a VPC..."},"vswitchId":{"label":"VSwitch","prompt":"Choose a VSwitch..."},"privateIp":{"label":"Private IP","placeholder":"Private IP in Private Network"},"privateAddressOnly":{"label":"Private Address Only"},"internetChargeType":{"label":"Bandwidth Billing","prompt":"Choose Bandwidth Billing..."},"internetChargeTypes":{"payByTraffic":"Pay-By-Traffic","payByBandwidth":"Pay-By-Bandwidth"},"securitySection":{"label":"Security","detail":"Choose the security groups that will be applied to Instances"},"securityGroup":{"label":"Security Group","placeholder":"Security Group","prompt":"Choose a Security Group...","defaultCreate":"Automatically create a <code>{groupName}</code> group"},"sshPassword":{"label":"SSH Password","placeholder":"Set Instance SSH Password (Optional)","provided":"Provided"},"tags":{"addActionLabel":"Add Instance Tag","valueLabel":"Tags","placeholder":"e.g. dev"},"errors":{"nameRequired": "Name is required","zoneIdRequired":"Available Zone is required.","vpcIdRequired":"VPC is required.","vswitchIdRequired":"VSwitch is required.","accessKeyRequired":"Access Key is required.","accessSecretRequired":"Access Secret Key is required.","sshPasswordLengthNotValid":"The length of SSH password must between eight and thirty.","sshPasswordInvalidCharacter":"SSH password contains invalid characters.","sshPasswordFormatError":"SSH password must contain at least three out of four kinds of following characters: uppercase letter, lowercase letters, numbers, and special characters.","nameNotValidForApp":"The name is invalid according to the {appName} hostname rule."}}}},
-  'zh-hans': {"nodeDriver":{"aliyunecs":{"accountSection":{"label":"1. 访问令牌","detail":"配置用于创建阿里云主机的访问令牌","next":"下一步: 认证&配置网络","loading":"正在获取阿里云区域信息..."},"accessKey":{"label":"访问秘钥","placeholder":"阿里云访问秘钥"},"accessKeySecret":{"label":"访问秘钥令牌","placeholder":"阿里云访问秘钥所对应的令牌","provided":"已提供"},"apiEndpoint":{"label":"(可选)阿里云私有部署API地址","placeholder":"阿里云私有部署API地址"},"instanceOptionsSection":{"label":"实例","detail":"设置即将创建的阿里云实例"},"instanceDescription":{"label":"实例描述","placeholder":"该实例的描述"},"instanceType":{"label":"实例类型","placeholder":"实例类型"},"systemImage":{"label":"系统镜像","placeholder":"系统镜像"},"internetMaxBandwidth":{"label":"最大网络带宽","placeholder":"1到100"},"aliyunSLB":{"label":"阿里云SLB ID","placeholder":"阿里云SLB ID"},"instanceSection": {"next":"下一步: 配置存储选项","loading":"正在获取阿里云存储类型..."},"storageSection":{"label":"存储","detail":"配置通过该模版创建的实例的存储选项","next":"下一步: 配置阿里云实例选项","loading":"正在获取主机类型和系统镜像..."},"ioOptimized":{"label":"存储IO优化","optimized":"优化","none":"不优化"},"disk":{"ephemeralSsd": "本地SSD盘","cloud": "普通云盘","efficiency":"高效云盘","ssd":"SSD 云盘","essd":"ESSD 云盘"},"systemDiskCategory":{"label":"系统盘种类"},"systemDiskSize":{"label":"系统磁盘大小","placeholder":"容量范围: 20 ~ 500"},"dataDiskCategory":{"label":"数据盘种类"},"dataDiskSize":{"label":"数据磁盘大小","placeholder":"容量范围: 0 ~ 32768"},"region":{"label":"区域","placeholder":"区域"},"zone":{"label":"可用区","prompt":"选择可用区..."},"networkSection":{"label":"网络","detail":"配置通过该模版创建的实例的网络选项","next":"下一步: 配置阿里云实例选项","loading":"正在获取主机类型和系统镜像..."},"routeCIDR":{"label":"路由CIDR","placeholder":"例如: 192.168.1.0/24"},"vpcId":{"label":"专有网络","prompt":"选择专有网络..."},"vswitchId":{"label":"交换机","prompt":"选择交换机..."},"privateIp":{"label":"私有IP","placeholder":"专用网络中的私有 IP"},"privateAddressOnly":{"label":"仅私网IP"},"internetChargeType":{"label":"带宽计费模式","prompt":"选择计费模式..."},"internetChargeTypes":{"payByTraffic":"按使用流量计费","payByBandwidth":"按固定带宽计费"},"securitySection":{"label":"安全","detail":"选择实例所需要配置的安全组。"},"securityGroup":{"label":"安全组","placeholder":"安全组","prompt":"选择安全组...","defaultCreate":"自动创建<code>{groupName}</code>安全组。"},"sshPassword":{"label":"SSH密码","placeholder":"创建实例后SSH远程登录密码(非必填)","provided":"已提供"},"tags":{"addActionLabel":"添加实例标签","valueLabel":"标签","placeholder":"例如: dev"},"errors":{"nameRequired":"模板名称必须输入","zoneIdRequired":"请选择可用区","vpcIdRequired":"请选择专有网络","vswitchIdRequired":"请选择交换机","accessKeyRequired":"请输入访问秘钥","accessSecretRequired":"请输入访问秘钥令牌","sshPasswordLengthNotValid":"SSH密码的长度应为8至30之间","sshPasswordInvalidCharacter":"SSH密码包含非法字符","sshPasswordFormatError":"SSH密码必须至少包括大写字符，小写字符，数字和特殊字符中的三种","nameNotValidForApp":"根据{appName}主机名规则该名称无效。"}}}}
+  'en-us':   {"nodeDriver":{"aliyunecs":{"accountSection":{"label":"1. Account Access","detail":"API Keys will be used to launch Aliyun ECS Instances.","next":"Next: Authenticate & Config network options","loading":"Loading Regions from Aliyun ECS..."},"accessKey":{"label":"Access Key","placeholder":"Your Aliyun Account Access Key"},"accessKeySecret":{"label":"Access Key Secret","placeholder":"Your Aliyun Account Access Key Secret","provided":"Provided"},"apiEndpoint":{"label":"API Endpoint (Optional)","placeholder":"Private Aliyun API Server Endpoint"},"instanceOptionsSection":{"label":"Instance","detail":"Customize the Aliyun ECS Instance that will be created."},"instanceDescription":{"label":"Instance Description","placeholder":"Instance Description"},"instanceType":{"label":"Instance Type","placeholder":"Instance Type"},"systemImage":{"label":"System image","placeholder":"System image"},"internetMaxBandwidth":{"label":"Internet Max Bandwidth","placeholder":"1 to 100"},"aliyunSLB":{"label":"Aliyun SLB ID","placeholder":"Aliyun SLB ID"},"instanceSection":{"next":"Next: Config Storage Options","loading":"Loading Storage Types from Aliyun ECS..."},"storageSection":{"label":"Storage","detail":"Configure the storage for the instances that will be created by this template.","next":"Next: Config Aliyun ECS Instance options","loading":"Loading Instance Types and Images from Aliyun ECS..."},"ioOptimized":{"label":"Instance Storage I/O Optimized","optimized":"Optimized","none":"None"},"disk":{"cloud":"Ordinary Disk","ephemeralSsd":"Local SSD Disk","efficiency":"Ultra Disk","ssd":"SSD Disk","essd":"ESSD Disk"},"systemDiskCategory":{"label":"System Disk Category"},"systemDiskSize":{"label":"System Disk Size","placeholder":"Disk Capacity: 20 ~ 500"},"dataDiskCategory":{"label":"Data Disk Category"},"dataDiskSize":{"label":"Data Disk Size","placeholder":"Disk Capacity: 20 ~ 32768"},"resourceGroup":{"label":"Resource Group","all":"Account's all Resources"},"region":{"label":"Region","placeholder":"Region"},"zone":{"label":"Available Zone","prompt":"Choose a Available Zone..."},"networkSection":{"label":"Network","detail":"Configure the network for the instances that will be created by this template.","next":"Next: Config Aliyun ECS Instance options","loading":"Loading Instance Types and Images from Aliyun ECS..."},"routeCIDR":{"label":"Route CIDR","placeholder":"e.g. 192.168.1.0/24"},"vpcId":{"label":"VPC","prompt":"Choose a VPC..."},"vswitchId":{"label":"VSwitch","prompt":"Choose a VSwitch..."},"privateIp":{"label":"Private IP","placeholder":"Private IP in Private Network"},"privateAddressOnly":{"label":"Private Address Only"},"internetChargeType":{"label":"Bandwidth Billing","prompt":"Choose Bandwidth Billing..."},"internetChargeTypes":{"payByTraffic":"Pay-By-Traffic","payByBandwidth":"Pay-By-Bandwidth"},"securitySection":{"label":"Security","detail":"Choose the security groups that will be applied to Instances"},"securityGroup":{"label":"Security Group","placeholder":"Security Group","prompt":"Choose a Security Group...","defaultCreate":"Automatically create a <code>{groupName}</code> group"},"sshPassword":{"label":"SSH Password","placeholder":"Set Instance SSH Password (Optional)","provided":"Provided"},"tags":{"addActionLabel":"Add Instance Tag","valueLabel":"Tags","placeholder":"e.g. dev"},"errors":{"nameRequired":"Name is required","zoneIdRequired":"Available Zone is required.","vpcIdRequired":"VPC is required.","vswitchIdRequired":"VSwitch is required.","accessKeyRequired":"Access Key is required.","accessSecretRequired":"Access Secret Key is required.","sshPasswordLengthNotValid":"The length of SSH password must between eight and thirty.","sshPasswordInvalidCharacter":"SSH password contains invalid characters.","sshPasswordFormatError":"SSH password must contain at least three out of four kinds of following characters: uppercase letter, lowercase letters, numbers, and special characters.","nameNotValidForApp":"The name is invalid according to the {appName} hostname rule."}}}},
+  'zh-hans': {"nodeDriver":{"aliyunecs":{"accountSection":{"label":"1. 访问令牌","detail":"配置用于创建阿里云主机的访问令牌","next":"下一步: 认证&配置网络","loading":"正在获取阿里云区域信息..."},"accessKey":{"label":"访问秘钥","placeholder":"阿里云访问秘钥"},"accessKeySecret":{"label":"访问秘钥令牌","placeholder":"阿里云访问秘钥所对应的令牌","provided":"已提供"},"apiEndpoint":{"label":"(可选)阿里云私有部署API地址","placeholder":"阿里云私有部署API地址"},"instanceOptionsSection":{"label":"实例","detail":"设置即将创建的阿里云实例"},"instanceDescription":{"label":"实例描述","placeholder":"该实例的描述"},"instanceType":{"label":"实例类型","placeholder":"实例类型"},"systemImage":{"label":"系统镜像","placeholder":"系统镜像"},"internetMaxBandwidth":{"label":"最大网络带宽","placeholder":"1到100"},"aliyunSLB":{"label":"阿里云SLB ID","placeholder":"阿里云SLB ID"},"instanceSection":{"next":"下一步: 配置存储选项","loading":"正在获取阿里云存储类型..."},"storageSection":{"label":"存储","detail":"配置通过该模版创建的实例的存储选项","next":"下一步: 配置阿里云实例选项","loading":"正在获取主机类型和系统镜像..."},"ioOptimized":{"label":"存储IO优化","optimized":"优化","none":"不优化"},"disk":{"cloud":"普通云盘","ephemeralSsd":"本地SSD盘","efficiency":"高效云盘","ssd":"SSD 云盘","essd":"ESSD 云盘"},"systemDiskCategory":{"label":"系统盘种类"},"systemDiskSize":{"label":"系统磁盘大小","placeholder":"容量范围: 20 ~ 500"},"dataDiskCategory":{"label":"数据盘种类"},"dataDiskSize":{"label":"数据磁盘大小","placeholder":"容量范围: 0 ~ 32768"},"resourceGroup":{"label":"资源组","all":"账号全部资源"},"region":{"label":"区域","placeholder":"区域"},"zone":{"label":"可用区","prompt":"选择可用区..."},"networkSection":{"label":"网络","detail":"配置通过该模版创建的实例的网络选项","next":"下一步: 配置阿里云实例选项","loading":"正在获取主机类型和系统镜像..."},"routeCIDR":{"label":"路由CIDR","placeholder":"例如: 192.168.1.0/24"},"vpcId":{"label":"专有网络","prompt":"选择专有网络..."},"vswitchId":{"label":"交换机","prompt":"选择交换机..."},"privateIp":{"label":"私有IP","placeholder":"专用网络中的私有 IP"},"privateAddressOnly":{"label":"仅私网IP"},"internetChargeType":{"label":"带宽计费模式","prompt":"选择计费模式..."},"internetChargeTypes":{"payByTraffic":"按使用流量计费","payByBandwidth":"按固定带宽计费"},"securitySection":{"label":"安全","detail":"选择实例所需要配置的安全组。"},"securityGroup":{"label":"安全组","placeholder":"安全组","prompt":"选择安全组...","defaultCreate":"自动创建<code>{groupName}</code>安全组。"},"sshPassword":{"label":"SSH密码","placeholder":"创建实例后SSH远程登录密码(非必填)","provided":"已提供"},"tags":{"addActionLabel":"添加实例标签","valueLabel":"标签","placeholder":"例如: dev"},"errors":{"nameRequired":"模板名称必须输入","zoneIdRequired":"请选择可用区","vpcIdRequired":"请选择专有网络","vswitchIdRequired":"请选择交换机","accessKeyRequired":"请输入访问秘钥","accessSecretRequired":"请输入访问秘钥令牌","sshPasswordLengthNotValid":"SSH密码的长度应为8至30之间","sshPasswordInvalidCharacter":"SSH密码包含非法字符","sshPasswordFormatError":"SSH密码必须至少包括大写字符，小写字符，数字和特殊字符中的三种","nameNotValidForApp":"根据{appName}主机名规则该名称无效。"}}}}
 };
 const ENDPOINT = 'https://ecs.aliyuncs.com';
+const RESOURCE_GROUP_ENDPOINT = 'resourcemanager.aliyuncs.com';
 const VPC_ENDPOINT = 'vpc.aliyuncs.com';
 const PAGE_SIZE = 50;
 const DEFAULT_IMAGE = 'ubuntu_16_04_64';
@@ -78,6 +79,10 @@ export default Ember.Component.extend(NodeDriver, {
   securityGroups: null,
   images:         null,
   instanceTypes:  null,
+
+  resourceGroupId:      '',
+  resourceGroups:       null,
+  resourceGroupChoices: null,
 
   systemDiskChoices: [],
   dataDiskChoices:   [],
@@ -151,7 +156,17 @@ export default Ember.Component.extend(NodeDriver, {
       }
 
       try {
-        this.loadRegions(cb);
+        this.fetch('ResourceGroup', 'ResourceGroups').then(groups => {
+          set(this, 'resourceGroups', groups.map((group) => {
+            return {
+              label: `${ group.raw.DisplayName } (${ group.raw.Id })`,
+              value: group.raw.Id,
+              raw: group.raw
+            };
+          }));
+
+          this.loadRegions(cb);
+        });
       } catch (err) {
         const errors = get(this, 'errors') || [];
 
@@ -297,10 +312,45 @@ export default Ember.Component.extend(NodeDriver, {
 
   }),
 
+  resourceGroupChoicesShouldChange: observer('intl.locale', 'resourceGroups', function() {
+    const intl    = get(this, 'intl');
+    let choices = get(this, 'resourceGroups').concat();
+
+    next(() => {
+      choices = choices.filter((item) => item.raw.Status === 'OK')
+
+      choices.unshift({
+        label: intl.t('nodeDriver.aliyunecs.resourceGroup.all'),
+        value: ''
+      });
+
+      set(this, 'resourceGroupChoices', choices);
+    })
+  }),
+
+  resourceGroupIdDidChange: observer('resourceGroupId', function() {
+    this.regionDidChange();
+  }),
+
   zoneDidChange: observer('config.zone', function() {
+    const resourceGroupId = get(this, 'resourceGroupId');
+    const externalParams = {
+      RegionId: get(this, 'config.region'),
+      vpcId: get(this, 'config.vpcId')
+    };
+
+    if (!!resourceGroupId && resourceGroupId !== '') {
+      externalParams.ResourceGroupId = resourceGroupId;
+    }
+
     if ( get(this, 'config.vpcId') && !get(this, 'vswitches') ) {
-      this.fetch('VSwitch', 'VSwitches', { RegionId: get(this, 'config.region'), vpcId: get(this, 'config.vpcId') }).then((vswitches) => {
-        set(this, 'vswitches', vswitches);
+      this.fetch('VSwitch', 'VSwitches', externalParams).then((vswitches) => {
+        set(this, 'vswitches', vswitches.map((vswitch) => {
+          return {
+            ...vswitch,
+            label: `${ vswitch.raw.VSwitchName } (${ vswitch.value })`
+          };
+        }));
         this.resetVswitch();
       });
     } else {
@@ -310,9 +360,18 @@ export default Ember.Component.extend(NodeDriver, {
 
   vpcDidChange: observer('config.vpcId', function() {
     const vpcId = get(this, 'config.vpcId');
+    const resourceGroupId = get(this, 'resourceGroupId');
+    const externalParams = {
+      RegionId: get(this, 'config.region'),
+      vpcId
+    };
+
+    if (!!resourceGroupId && resourceGroupId !== '') {
+      externalParams.ResourceGroupId = resourceGroupId;
+    }
 
     if (vpcId) {
-      this.fetch('VSwitch', 'VSwitches', { RegionId: get(this, 'config.region'), vpcId: get(this, 'config.vpcId') }).then((vswitches) => {
+      this.fetch('VSwitch', 'VSwitches', externalParams).then((vswitches) => {
         set(this, 'vswitches', vswitches.map((vswitch) => {
           return {
             ...vswitch,
@@ -356,9 +415,17 @@ export default Ember.Component.extend(NodeDriver, {
 
   regionDidChange: observer('config.region', function() {
     const region = get(this, 'config.region');
+    const resourceGroupId = get(this, 'resourceGroupId');
+    const externalParams = {
+      RegionId: region,
+    };
+
+    if (!!resourceGroupId && resourceGroupId !== '') {
+      externalParams.ResourceGroupId = resourceGroupId;
+    }
 
     if (region) {
-      this.fetch('Vpc', 'Vpcs', { RegionId: get(this, 'config.region') }).then((vpcs) => {
+      this.fetch('Vpc', 'Vpcs', externalParams).then((vpcs) => {
         set(this, 'vpcs', vpcs.map((vpc) => {
           return {
             ...vpc,
@@ -460,6 +527,16 @@ export default Ember.Component.extend(NodeDriver, {
 
     if (vswitches && get(this, 'config.vswitchId')) {
       return get(vswitches.findBy('value', get(this, 'config.vswitchId')), 'label');
+    } else {
+      return '';
+    }
+  }),
+
+  resourceGroupShowValue: computed('intl.locale', 'resourceGroupId', 'resourceGroupChoices.[]', function() {
+    const resourceGroupChoices = get(this, 'resourceGroupChoices');
+
+    if (resourceGroupChoices && get(this, 'resourceGroupId') !== null) {
+      return get(resourceGroupChoices.findBy('value', get(this, 'resourceGroupId')), 'label');
     } else {
       return '';
     }
@@ -696,6 +773,12 @@ export default Ember.Component.extend(NodeDriver, {
     if(plural === 'Vpcs' || plural === 'VSwitches') {
       params.Version = '2016-04-28';
       endpoint = VPC_ENDPOINT;
+    }
+
+    if (plural === 'ResourceGroups') {
+      params.Action  = 'ListResourceGroups';
+      params.Version = '2020-03-31';
+      endpoint = RESOURCE_GROUP_ENDPOINT;
     }
 
     params.PageSize = PAGE_SIZE;
