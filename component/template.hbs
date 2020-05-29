@@ -270,7 +270,7 @@
         <div class="row">
           <div class="col span-6">
             <label class="acc-label">
-              {{t "nodeDriver.aliyunecs.systemImage.label"}}
+              {{t "nodeDriver.aliyunecs.systemImage.label"}}{{field-required}}
             </label>
             {{#input-or-display editable=(eq step 3) value=config.imageId}}
             {{new-select

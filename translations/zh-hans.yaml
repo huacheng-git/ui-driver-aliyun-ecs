@@ -118,6 +118,7 @@ nodeDriver:
       zoneIdRequired: 请选择可用区
       vpcIdRequired: 请选择专有网络
       vswitchIdRequired: 请选择交换机
+      imageIdRequired: 请选择镜像
       accessKeyRequired: 请输入访问秘钥
       accessSecretRequired: 请输入访问秘钥令牌
       sshPasswordLengthNotValid: SSH密码的长度应为8至30之间

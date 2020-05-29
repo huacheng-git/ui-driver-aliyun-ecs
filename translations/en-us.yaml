@@ -118,6 +118,7 @@ nodeDriver:
       zoneIdRequired: Available Zone is required.
       vpcIdRequired: VPC is required.
       vswitchIdRequired: VSwitch is required.
+      imageIdRequired: Image is required.
       accessKeyRequired: Access Key is required.
       accessSecretRequired: Access Secret Key is required.
       sshPasswordLengthNotValid: The length of SSH password must between eight and thirty.
