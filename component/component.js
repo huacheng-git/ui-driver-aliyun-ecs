@@ -571,6 +571,21 @@ export default Ember.Component.extend(NodeDriver, {
     }
   }),
 
+  securityGroupShowValue: computed('intl.locale', 'config.securityGroup', function() {
+    const securityGroups = get(this, 'securityGroups');
+    const securityGroup = get(this, 'config.securityGroup');
+
+    if (securityGroup === 'docker-machine') {
+      return securityGroup
+    }
+
+    if (securityGroups && securityGroup) {
+      return get(securityGroups.findBy('value', securityGroup), 'label');
+    } else {
+      return '';
+    }
+  }),
+
   resourceGroupShowValue: computed('intl.locale', 'resourceGroupId', 'resourceGroupChoices.[]', function() {
     const resourceGroupChoices = get(this, 'resourceGroupChoices');
 

@@ -148,7 +148,7 @@
             <label class="acc-label">
               {{t "nodeDriver.aliyunecs.securityGroup.label"}}
             </label>
-            {{#input-or-display editable=(eq step 2) value=config.securityGroup}}
+            {{#input-or-display editable=(eq step 2) value=securityGroupShowValue}}
               {{new-select
                       classNames="form-control"
                       content=securityGroups
