@@ -81,7 +81,6 @@ export default Ember.Component.extend(NodeDriver, {
   images:         null,
   instanceTypes:  null,
 
-  resourceGroupId:      '',
   resourceGroups:       null,
   resourceGroupChoices: null,
 
@@ -116,7 +115,8 @@ export default Ember.Component.extend(NodeDriver, {
         instanceType:       DEFAULT_INSTANCE_TYPE,
         internetChargeType: 'PayByTraffic',
         systemDiskSize:     '40',
-        diskSize:           '0'
+        diskSize:           '0',
+        resourceGroupId:    '',
       });
 
       set(this, 'model.engineInstallURL', 'https://drivers.rancher.cn/pandaria/docker-install/19.03-aliyun.sh');
@@ -333,13 +333,13 @@ export default Ember.Component.extend(NodeDriver, {
     })
   }),
 
-  resourceGroupIdDidChange: observer('resourceGroupId', function() {
+  resourceGroupIdDidChange: observer('config.resourceGroupId', function() {
     this.regionDidChange();
   }),
 
   zoneDidChange: observer('config.zone', function() {
     const intl = get(this, 'intl');
-    const resourceGroupId = get(this, 'resourceGroupId');
+    const resourceGroupId = get(this, 'config.resourceGroupId');
     const externalParams = {
       RegionId: get(this, 'config.region'),
       vpcId: get(this, 'config.vpcId')
@@ -373,7 +373,7 @@ export default Ember.Component.extend(NodeDriver, {
   vpcDidChange: observer('config.vpcId', function() {
     const intl = get(this, 'intl');
     const vpcId = get(this, 'config.vpcId');
-    const resourceGroupId = get(this, 'resourceGroupId');
+    const resourceGroupId = get(this, 'config.resourceGroupId');
     const externalParams = {
       RegionId: get(this, 'config.region'),
       vpcId
@@ -448,7 +448,7 @@ export default Ember.Component.extend(NodeDriver, {
   regionDidChange: observer('config.region', function() {
     const intl = get(this, 'intl');
     const region = get(this, 'config.region');
-    const resourceGroupId = get(this, 'resourceGroupId');
+    const resourceGroupId = get(this, 'config.resourceGroupId');
     const externalParams = {
       RegionId: region,
     };
@@ -579,18 +579,18 @@ export default Ember.Component.extend(NodeDriver, {
       return securityGroup
     }
 
-    if (securityGroups && securityGroup) {
+    if (securityGroups && securityGroups.length > 0 && securityGroup) {
       return get(securityGroups.findBy('value', securityGroup), 'label');
     } else {
       return '';
     }
   }),
 
-  resourceGroupShowValue: computed('intl.locale', 'resourceGroupId', 'resourceGroupChoices.[]', function() {
+  resourceGroupShowValue: computed('intl.locale', 'config.resourceGroupId', 'resourceGroupChoices.[]', function() {
     const resourceGroupChoices = get(this, 'resourceGroupChoices');
 
-    if (resourceGroupChoices && get(this, 'resourceGroupId') !== null) {
-      return get(resourceGroupChoices.findBy('value', get(this, 'resourceGroupId')), 'label');
+    if (resourceGroupChoices && get(this, 'config.resourceGroupId') !== null) {
+      return get(resourceGroupChoices.findBy('value', get(this, 'config.resourceGroupId')), 'label');
     } else {
       return '';
     }
@@ -761,11 +761,19 @@ export default Ember.Component.extend(NodeDriver, {
   },
 
   loadImages(cb) {
-    this.fetch('Image', 'Images', {
+    const resourceGroupId = get(this, 'config.resourceGroupId');
+    const externalParams = {
       RegionId: get(this, 'config.region'),
       InstanceType: get(this, 'config.instanceType'),
-      IsSupportIoOptimized: true,
-    })
+      ImageOwnerAlias: 'system',
+      IsSupportIoOptimized: true
+    };
+
+    if (!!resourceGroupId && resourceGroupId !== '') {
+      externalParams.ResourceGroupId = resourceGroupId;
+    }
+
+    this.fetch('Image', 'Images', externalParams)
       .then((images) => {
         set(this, 'images', images.filter((image) => {
           return image.raw.OSType === 'linux';
