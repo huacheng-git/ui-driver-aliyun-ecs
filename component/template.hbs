@@ -104,7 +104,7 @@
             <label class="acc-label">
               {{t "nodeDriver.aliyunecs.region.label"}}
             </label>
-            {{#input-or-display editable=(eq step 2) value=config.region}}
+            {{#input-or-display editable=(eq step 2) value=regionShowValue}}
               {{new-select
                       classNames="form-control"
                       content=regions
@@ -116,7 +116,7 @@
             <label class="acc-label">
               {{t "nodeDriver.aliyunecs.zone.label"}}{{field-required}}
             </label>
-            {{#input-or-display editable=(eq step 2) value=config.zone}}
+            {{#input-or-display editable=(eq step 2) value=zoneShowValue}}
               {{new-select
                       classNames="form-control"
                       content=zones
@@ -206,7 +206,7 @@
             <label class="acc-label">
               {{t "nodeDriver.aliyunecs.internetChargeType.label"}}
             </label>
-            {{#input-or-display editable=(eq step 2) value=config.internetChargeType}}
+            {{#input-or-display editable=(eq step 2) value=internetChargeShowValue}}
               {{new-select
                       classNames="form-control"
                       content=internetChargeTypes

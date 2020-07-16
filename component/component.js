@@ -551,7 +551,29 @@ export default Ember.Component.extend(NodeDriver, {
     });
   }),
 
-  vpcShowValue: computed('intl.locale', 'config.vpcId', function() {
+  regionShowValue: computed('intl.locale', 'config.region', 'regions.[]', function() {
+    const regionId = get(this,'config.region');
+    const regions = get(this, 'regions') || [];
+
+    if (regionId && regions.length > 0) {
+       return get(regions.findBy('value', regionId), 'label')
+    } else {
+      return ''
+    }
+  }),
+  
+  zoneShowValue: computed('intl.locale', 'config.zone', 'zones.[]', function() {
+    const zoneId = get(this,'config.zone');
+    const zones = get(this, 'zones') || [];
+
+    if (zoneId && zones.length > 0) {
+       return get(zones.findBy('value', zoneId), 'raw.LocalName')
+    } else {
+      return ''
+    }
+  }),
+
+  vpcShowValue: computed('intl.locale', 'config.vpcId', 'vpcs.[]', function() {
     const vpcs = get(this, 'vpcs');
 
     if (vpcs && get(this, 'config.vpcId')) {
@@ -561,7 +583,7 @@ export default Ember.Component.extend(NodeDriver, {
     }
   }),
 
-  vswitchShowValue: computed('intl.locale', 'config.vswitchId', function() {
+  vswitchShowValue: computed('intl.locale', 'config.vswitchId', 'vswitches.[]', function() {
     const vswitches = get(this, 'vswitches');
 
     if (vswitches && get(this, 'config.vswitchId')) {
@@ -571,7 +593,7 @@ export default Ember.Component.extend(NodeDriver, {
     }
   }),
 
-  securityGroupShowValue: computed('intl.locale', 'config.securityGroup', function() {
+  securityGroupShowValue: computed('intl.locale', 'config.securityGroup', 'securityGroups.[]', function() {
     const securityGroups = get(this, 'securityGroups');
     const securityGroup = get(this, 'config.securityGroup');
 
@@ -591,6 +613,17 @@ export default Ember.Component.extend(NodeDriver, {
 
     if (resourceGroupChoices && get(this, 'config.resourceGroupId') !== null) {
       return get(resourceGroupChoices.findBy('value', get(this, 'config.resourceGroupId')), 'label');
+    } else {
+      return '';
+    }
+  }),
+
+  internetChargeShowValue: computed('intl.locale', 'config.internetChargeType', 'internetChargeTypes.[]', function() {
+    const internetChargeType = get(this, 'config.internetChargeType');
+    const internetChargeTypes = get(this, 'internetChargeTypes');
+
+    if (internetChargeType) {
+      return get(internetChargeTypes.findBy('value', internetChargeType), 'label');
     } else {
       return '';
     }
