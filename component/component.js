@@ -171,6 +171,8 @@ export default Ember.Component.extend(NodeDriver, {
     },
 
     loadStorageTypes(cb) {
+      set(this, 'errors', null);
+
       const errors = get(this, 'errors') || [];
       const intl = get(this, 'intl');
 
@@ -187,21 +189,19 @@ export default Ember.Component.extend(NodeDriver, {
         return;
       }
 
-      set(this, 'errors', null);
-
       set(this, 'step', 4);
       cb();
     },
 
     loadInstanceTypes(cb) {
+      set(this, 'errors', null);
+
       const errors = get(this, 'errors') || [];
       const intl = get(this, 'intl');
 
       const zone = get(this, 'config.zone');
       const vpcId = get(this, 'config.vpcId');
       const vswitchId = get(this, 'config.vswitchId')
-
-      set(this, 'errors', null);
 
       if ( zone ) {
         if ( !vpcId ) {
