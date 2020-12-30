@@ -110,13 +110,14 @@ export default Ember.Component.extend(NodeDriver, {
 
     if ( !config ) {
       config = this.get('globalStore').createRecord({
-        type:               configField,
-        accessKeySecret:    '',
-        instanceType:       DEFAULT_INSTANCE_TYPE,
-        internetChargeType: 'PayByTraffic',
-        systemDiskSize:     '40',
-        diskSize:           '0',
-        resourceGroupId:    '',
+        type:                 configField,
+        accessKeySecret:      '',
+        instanceType:         DEFAULT_INSTANCE_TYPE,
+        internetChargeType:   'PayByTraffic',
+        systemDiskSize:       '40',
+        diskSize:             '0',
+        resourceGroupId:      '',
+        internetMaxBandwidth: '1'
       });
 
       set(this, 'model.engineInstallURL', 'https://drivers.rancher.cn/pandaria/docker-install/19.03-aliyun.sh');
@@ -500,6 +501,17 @@ export default Ember.Component.extend(NodeDriver, {
         }
       });
     }
+  }),
+
+  bandwidthShouldChange: observer('config.privateAddressOnly', function() {
+    const _private = get(this, 'config.privateAddressOnly');
+    let out = '1';
+
+    if (_private) {
+      out = '0'
+    }
+
+    set(this, 'config.internetMaxBandwidth', out);
   }),
 
   systemDiskChoicesDidChange: observer('systemDiskChoices.@each.value', function() {
