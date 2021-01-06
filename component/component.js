@@ -80,6 +80,7 @@ export default Ember.Component.extend(NodeDriver, {
   securityGroups: [],
   images:         null,
   instanceTypes:  null,
+  minBandWidth:   1,
 
   resourceGroups:       null,
   resourceGroupChoices: null,
@@ -512,6 +513,7 @@ export default Ember.Component.extend(NodeDriver, {
     }
 
     set(this, 'config.internetMaxBandwidth', out);
+    set(this, 'minBandWidth', parseInt(out));
   }),
 
   systemDiskChoicesDidChange: observer('systemDiskChoices.@each.value', function() {
