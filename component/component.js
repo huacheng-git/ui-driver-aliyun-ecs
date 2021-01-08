@@ -80,7 +80,6 @@ export default Ember.Component.extend(NodeDriver, {
   securityGroups: [],
   images:         null,
   instanceTypes:  null,
-  minBandWidth:   1,
 
   resourceGroups:       null,
   resourceGroupChoices: null,
@@ -118,7 +117,6 @@ export default Ember.Component.extend(NodeDriver, {
         systemDiskSize:       '40',
         diskSize:             '0',
         resourceGroupId:      '',
-        internetMaxBandwidth: '1'
       });
 
       set(this, 'model.engineInstallURL', 'https://drivers.rancher.cn/pandaria/docker-install/19.03-aliyun.sh');
@@ -506,14 +504,14 @@ export default Ember.Component.extend(NodeDriver, {
 
   bandwidthShouldChange: observer('config.privateAddressOnly', function() {
     const _private = get(this, 'config.privateAddressOnly');
-    let out = '1';
+    const _config = get(this, 'config');
 
     if (_private) {
-      out = '0'
+      delete _config.internetMaxBandwidth;
+      set(this, 'config', _config)
+    } else {
+      set(this, 'config.internetMaxBandwidth', '1');
     }
-
-    set(this, 'config.internetMaxBandwidth', out);
-    set(this, 'minBandWidth', parseInt(out));
   }),
 
   systemDiskChoicesDidChange: observer('systemDiskChoices.@each.value', function() {

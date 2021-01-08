@@ -281,6 +281,7 @@
             }}
             {{/input-or-display}}
           </div>
+          {{#if (not config.privateAddressOnly)}}
           <div class="col span-6">
             <label class="acc-label">
               {{t "nodeDriver.aliyunecs.internetMaxBandwidth.label"}}
@@ -288,8 +289,8 @@
             <div class="input-group">
               {{#if (eq step 3)}}
                 {{input-integer
-                        min=minBandWidth
-                        max=100
+                        min=1
+                        max=200
                         class="form-control"
                         value=config.internetMaxBandwidth
                         placeholder=(t "nodeDriver.aliyunecs.internetMaxBandwidth.placeholder")
@@ -301,6 +302,7 @@
 
             </div>
           </div>
+          {{/if}}
         </div>
 
         <div class="row">
