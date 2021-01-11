@@ -29,7 +29,7 @@ nodeDriver:
       placeholder: 系统镜像
     internetMaxBandwidth:
       label: 最大网络带宽
-      placeholder: 1到100
+      placeholder: 1到200
     aliyunSLB:
       label: 阿里云SLB ID
       placeholder: 阿里云SLB ID

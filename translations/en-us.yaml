@@ -29,7 +29,7 @@ nodeDriver:
       placeholder: System image
     internetMaxBandwidth:
       label: Internet Max Bandwidth
-      placeholder: 1 to 100
+      placeholder: 1 to 200
     aliyunSLB:
       label: Aliyun SLB ID
       placeholder: Aliyun SLB ID
