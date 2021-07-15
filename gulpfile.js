@@ -9,6 +9,7 @@ const argv = require('yargs').argv;
 const pkg = require('./package.json');
 const fs = require('fs');
 const replaceString = require('replace-string');
+const yaml          = require('gulp-yaml');
 
 
 const NAME_TOKEN = '%%DRIVERNAME%%';
@@ -18,6 +19,7 @@ const DIST = 'dist/';
 const TMP = 'tmp/';
 const ASSETS = 'assets/';
 const DRIVER_NAME = argv.name || pkg.name.replace(/^ui-driver-/, '');
+const TRANSLATIONS  ='translations/';
 
 console.log('Driver Name:', DRIVER_NAME);
 
@@ -140,3 +142,10 @@ gulp.task('default', gulp.series('build'));
 gulp.task('watch', function () {
   gulp.watch(['./component/*.js', './component/*.hbs', './component/*.css'], gulp.parallel('build'));
 });
+
+gulp.task('translations', gulp.series('clean', function() {
+  return gulp.src(TRANSLATIONS + '*.yaml')
+    .pipe(replace(NAME_TOKEN, DRIVER_NAME))
+    .pipe(yaml({ safe: true }))
+    .pipe(gulp.dest(DIST + TRANSLATIONS));
+}));
