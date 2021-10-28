@@ -5,13 +5,11 @@ nodeDriver:
       detail: 配置用于创建阿里云主机的访问令牌
       next: '下一步: 认证&配置网络'
       loading: 正在获取阿里云区域信息...
-    accessKey:
-      label: 访问秘钥
-      placeholder: 阿里云访问秘钥
-    accessKeySecret:
-      label: 访问秘钥令牌
-      placeholder: 阿里云访问秘钥所对应的令牌
-      provided: 已提供
+    access:
+      next: '下一步: 认证&配置网络'
+      loading: '从Alicloud ECS加载可用区域'
+      title: 帐户访问
+      detail: 选择将用于启动阿里巴巴Kubernetes服务的地区和API密钥
     apiEndpoint:
       label: '(可选)阿里云私有部署API地址'
       placeholder: 阿里云私有部署API地址

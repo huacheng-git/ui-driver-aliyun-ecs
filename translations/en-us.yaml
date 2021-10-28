@@ -5,13 +5,11 @@ nodeDriver:
       detail: API Keys will be used to launch Aliyun ECS Instances.
       next: "Next: Authenticate & Config network options"
       loading: Loading Regions from Aliyun ECS...
-    accessKey:
-      label: Access Key
-      placeholder: Your Aliyun Account Access Key
-    accessKeySecret:
-      label: Access Key Secret
-      placeholder: Your Aliyun Account Access Key Secret
-      provided: Provided
+    access:
+      next: "Next: Configure Cluster"
+      loading: "Loading Zones from Alicloud ECS"
+      title: Account Access
+      detail: Choose the region and API Key that will be used to launch Alibaba Kubernetes Service
     apiEndpoint:
       label: API Endpoint (Optional)
       placeholder: Private Aliyun API Server Endpoint

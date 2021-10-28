@@ -23,9 +23,9 @@ const next         = Ember.run.next;
 
 const languages = {
   'en-us':   {"nodeDriver":{"aliyunecs":{"accountSection":{"label":"1. Account Access","detail":"API Keys will be used to launch Aliyun ECS Instances.","next":"Next: Authenticate & Config network options","loading":"Loading Regions from Aliyun ECS..."},"accessKey":{"label":"Access Key","placeholder":"Your Aliyun Account Access Key"},"accessKeySecret":{"label":"Access Key Secret","placeholder":"Your Aliyun Account Access Key Secret","provided":"Provided"},"apiEndpoint":{"label":"API Endpoint (Optional)","placeholder":"Private Aliyun API Server Endpoint"},"instanceOptionsSection":{"label":"Instance","detail":"Customize the Aliyun ECS Instance that will be created."},"instanceDescription":{"label":"Instance Description","placeholder":"Instance Description"},"instanceType":{"label":"Instance Type","placeholder":"Instance Type"},"systemImage":{"label":"System image","placeholder":"System image"},"internetMaxBandwidth":{"label":"Internet Max Bandwidth","placeholder":"1 to 200"},"aliyunSLB":{"label":"Aliyun SLB ID","placeholder":"Aliyun SLB ID"},"instanceSection":{"next":"Next: Config Storage Options","loading":"Loading Storage Types from Aliyun ECS..."},"storageSection":{"label":"Storage","detail":"Configure the storage for the instances that will be created by this template.","next":"Next: Config Aliyun ECS Instance options","loading":"Loading Instance Types and Images from Aliyun ECS..."},"ioOptimized":{"label":"Instance Storage I/O Optimized","optimized":"Optimized","none":"None"},"disk":{"cloud":"Ordinary Disk","ephemeralSsd":"Local SSD Disk","efficiency":"Ultra Disk","ssd":"SSD Disk","essd":"ESSD Disk"},"systemDiskCategory":{"label":"System Disk Category"},"systemDiskSize":{"label":"System Disk Size","placeholder":"Disk Capacity: 20 ~ 500"},"dataDiskCategory":{"label":"Data Disk Category"},"dataDiskSize":{"label":"Data Disk Size","placeholder":"Disk Capacity: 20 ~ 32768"},"resourceGroup":{"label":"Resource Group","all":"Account's all Resources"},"region":{"label":"Region","placeholder":"Region"},"zone":{"label":"Available Zone","prompt":"Choose a Available Zone..."},"networkSection":{"label":"Network","detail":"Configure the network for the instances that will be created by this template.","next":"Next: Config Aliyun ECS Instance options","loading":"Loading Instance Types and Images from Aliyun ECS..."},"routeCIDR":{"label":"Route CIDR","placeholder":"e.g. 192.168.1.0/24"},"vpcId":{"label":"VPC","prompt":"Choose a VPC...","default":"Default VPC"},"vswitchId":{"label":"VSwitch","prompt":"Choose a VSwitch...","default":"Default VSwitch"},"privateIp":{"label":"Private IP","placeholder":"Private IP in Private Network"},"privateAddressOnly":{"label":"Private Address Only"},"internetChargeType":{"label":"Bandwidth Billing","prompt":"Choose Bandwidth Billing..."},"internetChargeTypes":{"payByTraffic":"Pay-By-Traffic","payByBandwidth":"Pay-By-Bandwidth"},"securitySection":{"label":"Security","detail":"Choose the security groups that will be applied to Instances"},"securityGroup":{"label":"Security Group","placeholder":"Security Group","prompt":"Choose a Security Group...","defaultCreate":"Automatically create a <code>{groupName}</code> group"},"sshPassword":{"label":"SSH Password","placeholder":"Set Instance SSH Password (Optional)","provided":"Provided"},"tags":{"addActionLabel":"Add Instance Tag","valueLabel":"Tags","placeholder":"e.g. dev"},"errors":{"nameRequired":"Name is required","zoneIdRequired":"Available Zone is required.","vpcIdRequired":"VPC is required.","vswitchIdRequired":"VSwitch is required.","imageIdRequired":"Image is required.","accessKeyRequired":"Access Key is required.","accessSecretRequired":"Access Secret Key is required.","sshPasswordLengthNotValid":"The length of SSH password must between eight and thirty.","sshPasswordInvalidCharacter":"SSH password contains invalid characters.","sshPasswordFormatError":"SSH password must contain at least three out of four kinds of following characters: uppercase letter, lowercase letters, numbers, and special characters.","nameNotValidForApp":"The name is invalid according to the {appName} hostname rule."}}}},
-  'zh-hans': {"nodeDriver":{"aliyunecs":{"accountSection":{"label":"1. 访问令牌","detail":"配置用于创建阿里云主机的访问令牌","next":"下一步: 认证&配置网络","loading":"正在获取阿里云区域信息..."},"accessKey":{"label":"访问秘钥","placeholder":"阿里云访问秘钥"},"accessKeySecret":{"label":"访问秘钥令牌","placeholder":"阿里云访问秘钥所对应的令牌","provided":"已提供"},"apiEndpoint":{"label":"(可选)阿里云私有部署API地址","placeholder":"阿里云私有部署API地址"},"instanceOptionsSection":{"label":"实例","detail":"设置即将创建的阿里云实例"},"instanceDescription":{"label":"实例描述","placeholder":"该实例的描述"},"instanceType":{"label":"实例类型","placeholder":"实例类型"},"systemImage":{"label":"系统镜像","placeholder":"系统镜像"},"internetMaxBandwidth":{"label":"最大网络带宽","placeholder":"1到200"},"aliyunSLB":{"label":"阿里云SLB ID","placeholder":"阿里云SLB ID"},"instanceSection":{"next":"下一步: 配置存储选项","loading":"正在获取阿里云存储类型..."},"storageSection":{"label":"存储","detail":"配置通过该模版创建的实例的存储选项","next":"下一步: 配置阿里云实例选项","loading":"正在获取主机类型和系统镜像..."},"ioOptimized":{"label":"存储IO优化","optimized":"优化","none":"不优化"},"disk":{"cloud":"普通云盘","ephemeralSsd":"本地SSD盘","efficiency":"高效云盘","ssd":"SSD 云盘","essd":"ESSD 云盘"},"systemDiskCategory":{"label":"系统盘种类"},"systemDiskSize":{"label":"系统磁盘大小","placeholder":"容量范围: 20 ~ 500"},"dataDiskCategory":{"label":"数据盘种类"},"dataDiskSize":{"label":"数据磁盘大小","placeholder":"容量范围: 0 ~ 32768"},"resourceGroup":{"label":"资源组","all":"账号全部资源"},"region":{"label":"区域","placeholder":"区域"},"zone":{"label":"可用区","prompt":"选择可用区..."},"networkSection":{"label":"网络","detail":"配置通过该模版创建的实例的网络选项","next":"下一步: 配置阿里云实例选项","loading":"正在获取主机类型和系统镜像..."},"routeCIDR":{"label":"路由CIDR","placeholder":"例如: 192.168.1.0/24"},"vpcId":{"label":"专有网络","prompt":"选择专有网络...","default":"默认专有网络"},"vswitchId":{"label":"交换机","prompt":"选择交换机...","default":"默认交换机"},"privateIp":{"label":"私有IP","placeholder":"专用网络中的私有 IP"},"privateAddressOnly":{"label":"仅私网IP"},"internetChargeType":{"label":"带宽计费模式","prompt":"选择计费模式..."},"internetChargeTypes":{"payByTraffic":"按使用流量计费","payByBandwidth":"按固定带宽计费"},"securitySection":{"label":"安全","detail":"选择实例所需要配置的安全组。"},"securityGroup":{"label":"安全组","placeholder":"安全组","prompt":"选择安全组...","defaultCreate":"自动创建<code>{groupName}</code>安全组。"},"sshPassword":{"label":"SSH密码","placeholder":"创建实例后SSH远程登录密码(非必填)","provided":"已提供"},"tags":{"addActionLabel":"添加实例标签","valueLabel":"标签","placeholder":"例如: dev"},"errors":{"nameRequired":"模板名称必须输入","zoneIdRequired":"请选择可用区","vpcIdRequired":"请选择专有网络","vswitchIdRequired":"请选择交换机","imageIdRequired":"请选择镜像","accessKeyRequired":"请输入访问秘钥","accessSecretRequired":"请输入访问秘钥令牌","sshPasswordLengthNotValid":"SSH密码的长度应为8至30之间","sshPasswordInvalidCharacter":"SSH密码包含非法字符","sshPasswordFormatError":"SSH密码必须至少包括大写字符，小写字符，数字和特殊字符中的三种","nameNotValidForApp":"根据{appName}主机名规则该名称无效。"}}}},
-  'zh-hant': {"nodeDriver":{"aliyunecs":{"accountSection":{"label":"1. 訪問令牌","detail":"配置用於創建阿里雲主機的訪問令牌","next":"下一步: 認證&配置網絡","loading":"正在獲取阿里雲區域信息..."},"accessKey":{"label":"訪問秘鑰","placeholder":"阿里雲訪問秘鑰"},"accessKeySecret":{"label":"訪問秘鑰令牌","placeholder":"阿里雲訪問秘鑰所對應的令牌","provided":"已提供"},"apiEndpoint":{"label":"(可選)阿里雲私有部署API地址","placeholder":"阿里雲私有部署API地址"},"instanceOptionsSection":{"label":"實例","detail":"設置即將創建的阿里雲實例"},"instanceDescription":{"label":"實例描述","placeholder":"該實例的描述"},"instanceType":{"label":"實例類型","placeholder":"實例類型"},"systemImage":{"label":"系統鏡像","placeholder":"系統鏡像"},"internetMaxBandwidth":{"label":"最大網絡帶寬","placeholder":"1到200"},"aliyunSLB":{"label":"阿里雲SLB ID","placeholder":"阿里雲SLB ID"},"instanceSection":{"next":"下一步: 配置存儲選項","loading":"正在獲取阿里雲存儲類型..."},"storageSection":{"label":"存儲","detail":"配置通過該模版創建的實例的存儲選項","next":"下一步: 配置阿里雲實例選項","loading":"正在獲取主機類型和系統鏡像..."},"ioOptimized":{"label":"存儲IO優化","optimized":"優化","none":"不優化"},"disk":{"cloud":"普通雲盤","ephemeralSsd":"本地SSD盤","efficiency":"高效雲盤","ssd":"SSD 雲盤","essd":"ESSD 雲盤"},"systemDiskCategory":{"label":"系統盤種類"},"systemDiskSize":{"label":"系統磁盤大小","placeholder":"容量範圍: 20 ~ 500"},"dataDiskCategory":{"label":"數據盤種類"},"dataDiskSize":{"label":"數據磁盤大小","placeholder":"容量範圍: 0 ~ 32768"},"resourceGroup":{"label":"資源組","all":"賬號全部資源"},"region":{"label":"區域","placeholder":"區域"},"zone":{"label":"可用區","prompt":"選擇可用區..."},"networkSection":{"label":"網絡","detail":"配置通過該模版創建的實例的網絡選項","next":"下一步: 配置阿里雲實例選項","loading":"正在獲取主機類型和系統鏡像..."},"routeCIDR":{"label":"路由CIDR","placeholder":"例如: 192.168.1.0/24"},"vpcId":{"label":"專有網絡","prompt":"選擇專有網絡...","default":"默認專有網絡"},"vswitchId":{"label":"交換機","prompt":"選擇交換機...","default":"默認交換機"},"privateIp":{"label":"私有IP","placeholder":"專用網絡中的私有 IP"},"privateAddressOnly":{"label":"僅私網IP"},"internetChargeType":{"label":"帶寬計費模式","prompt":"選擇計費模式..."},"internetChargeTypes":{"payByTraffic":"按使用流量計費","payByBandwidth":"按固定帶寬計費"},"securitySection":{"label":"安全","detail":"選擇實例所需要配置的安全組。"},"securityGroup":{"label":"安全組","placeholder":"安全組","prompt":"選擇安全組...","defaultCreate":"自動創建<code>{groupName}</code>安全組。"},"sshPassword":{"label":"SSH密碼","placeholder":"創建實例後SSH遠程登錄密碼(非必填)","provided":"已提供"},"tags":{"addActionLabel":"添加實例標籤","valueLabel":"標籤","placeholder":"例如: dev"},"errors":{"nameRequired":"模板名稱必須輸入","zoneIdRequired":"請選擇可用區","vpcIdRequired":"請選擇專有網絡","vswitchIdRequired":"請選擇交換機","imageIdRequired":"請選擇鏡像","accessKeyRequired":"請輸入訪問秘鑰","accessSecretRequired":"請輸入訪問秘鑰令牌","sshPasswordLengthNotValid":"SSH密碼的長度應為8至30之間","sshPasswordInvalidCharacter":"SSH密碼包含非法字符","sshPasswordFormatError":"SSH密碼必須至少包括大寫字符，小寫字符，數字和特殊字符中的三種","nameNotValidForApp":"根據{appName}主機名規則該名稱無效。"}}}},
-  'zh-hant-tw': {"nodeDriver":{"aliyunecs":{"accountSection":{"label":"1. 訪問令牌","detail":"配置用於創建阿里雲主機的訪問令牌","next":"下一步: 認證&配置網路","loading":"正在獲取阿里雲區域信息..."},"accessKey":{"label":"訪問秘鑰","placeholder":"阿里雲訪問秘鑰"},"accessKeySecret":{"label":"訪問秘鑰令牌","placeholder":"阿里雲訪問秘鑰所對應的令牌","provided":"已提供"},"apiEndpoint":{"label":"(可選)阿里雲私有部署API地址","placeholder":"阿里雲私有部署API地址"},"instanceOptionsSection":{"label":"實例","detail":"設置即將創建的阿里雲實例"},"instanceDescription":{"label":"實例描述","placeholder":"該實例的描述"},"instanceType":{"label":"實例類型","placeholder":"實例類型"},"systemImage":{"label":"系統鏡像","placeholder":"系統鏡像"},"internetMaxBandwidth":{"label":"最大網路帶寬","placeholder":"1到200"},"aliyunSLB":{"label":"阿里雲SLB ID","placeholder":"阿里雲SLB ID"},"instanceSection":{"next":"下一步: 配置存儲選項","loading":"正在獲取阿里雲存儲類型..."},"storageSection":{"label":"存儲","detail":"配置通過該模版創建的實例的存儲選項","next":"下一步: 配置阿里雲實例選項","loading":"正在獲取主機類型和系統鏡像..."},"ioOptimized":{"label":"存儲IO優化","optimized":"優化","none":"不優化"},"disk":{"cloud":"普通雲盤","ephemeralSsd":"本地SSD盤","efficiency":"高效雲盤","ssd":"SSD 雲盤","essd":"ESSD 雲盤"},"systemDiskCategory":{"label":"系統盤種類"},"systemDiskSize":{"label":"系統磁碟大小","placeholder":"容量範圍: 20 ~ 500"},"dataDiskCategory":{"label":"數據盤種類"},"dataDiskSize":{"label":"數據磁碟大小","placeholder":"容量範圍: 0 ~ 32768"},"resourceGroup":{"label":"資源組","all":"賬號全部資源"},"region":{"label":"區域","placeholder":"區域"},"zone":{"label":"可用區","prompt":"選擇可用區..."},"networkSection":{"label":"網路","detail":"配置通過該模版創建的實例的網路選項","next":"下一步: 配置阿里雲實例選項","loading":"正在獲取主機類型和系統鏡像..."},"routeCIDR":{"label":"路由CIDR","placeholder":"例如: 192.168.1.0/24"},"vpcId":{"label":"專有網路","prompt":"選擇專有網路...","default":"默認專有網路"},"vswitchId":{"label":"交換機","prompt":"選擇交換機...","default":"默認交換機"},"privateIp":{"label":"私有IP","placeholder":"專用網路中的私有 IP"},"privateAddressOnly":{"label":"僅私網IP"},"internetChargeType":{"label":"帶寬計費模式","prompt":"選擇計費模式..."},"internetChargeTypes":{"payByTraffic":"按使用流量計費","payByBandwidth":"按固定帶寬計費"},"securitySection":{"label":"安全","detail":"選擇實例所需要配置的安全組。"},"securityGroup":{"label":"安全組","placeholder":"安全組","prompt":"選擇安全組...","defaultCreate":"自動創建<code>{groupName}</code>安全組。"},"sshPassword":{"label":"SSH密碼","placeholder":"創建實例後SSH遠程登錄密碼(非必填)","provided":"已提供"},"tags":{"addActionLabel":"添加實例標籤","valueLabel":"標籤","placeholder":"例如: dev"},"errors":{"nameRequired":"模板名稱必須輸入","zoneIdRequired":"請選擇可用區","vpcIdRequired":"請選擇專有網路","vswitchIdRequired":"請選擇交換機","imageIdRequired":"請選擇鏡像","accessKeyRequired":"請輸入訪問秘鑰","accessSecretRequired":"請輸入訪問秘鑰令牌","sshPasswordLengthNotValid":"SSH密碼的長度應為8至30之間","sshPasswordInvalidCharacter":"SSH密碼包含非法字元","sshPasswordFormatError":"SSH密碼必須至少包括大寫字元，小寫字元，數字和特殊字元中的三種","nameNotValidForApp":"根據{appName}主機名規則該名稱無效。"}}}},
+  'zh-hans': {"nodeDriver":{"aliyunecs":{"accountSection":{"label":"1. 访问令牌","detail":"配置用于创建阿里云主机的访问令牌","next":"下一步: 认证&配置网络","loading":"正在获取阿里云区域信息..."},"access":{"next":"下一步: 认证&配置网络","loading":"从Alicloud ECS加载可用区域","title":"帐户访问","detail":"选择将用于启动阿里巴巴Kubernetes服务的地区和API密钥"},"apiEndpoint":{"label":"(可选)阿里云私有部署API地址","placeholder":"阿里云私有部署API地址"},"instanceOptionsSection":{"label":"实例","detail":"设置即将创建的阿里云实例"},"instanceDescription":{"label":"实例描述","placeholder":"该实例的描述"},"instanceType":{"label":"实例类型","placeholder":"实例类型"},"systemImage":{"label":"系统镜像","placeholder":"系统镜像"},"internetMaxBandwidth":{"label":"最大网络带宽","placeholder":"1到200"},"aliyunSLB":{"label":"阿里云SLB ID","placeholder":"阿里云SLB ID"},"instanceSection":{"next":"下一步: 配置存储选项","loading":"正在获取阿里云存储类型..."},"storageSection":{"label":"存储","detail":"配置通过该模版创建的实例的存储选项","next":"下一步: 配置阿里云实例选项","loading":"正在获取主机类型和系统镜像..."},"ioOptimized":{"label":"存储IO优化","optimized":"优化","none":"不优化"},"disk":{"cloud":"普通云盘","ephemeralSsd":"本地SSD盘","efficiency":"高效云盘","ssd":"SSD 云盘","essd":"ESSD 云盘"},"systemDiskCategory":{"label":"系统盘种类"},"systemDiskSize":{"label":"系统磁盘大小","placeholder":"容量范围: 20 ~ 500"},"dataDiskCategory":{"label":"数据盘种类"},"dataDiskSize":{"label":"数据磁盘大小","placeholder":"容量范围: 0 ~ 32768"},"resourceGroup":{"label":"资源组","all":"账号全部资源"},"region":{"label":"区域","placeholder":"区域"},"zone":{"label":"可用区","prompt":"选择可用区..."},"networkSection":{"label":"网络","detail":"配置通过该模版创建的实例的网络选项","next":"下一步: 配置阿里云实例选项","loading":"正在获取主机类型和系统镜像..."},"routeCIDR":{"label":"路由CIDR","placeholder":"例如: 192.168.1.0/24"},"vpcId":{"label":"专有网络","prompt":"选择专有网络...","default":"默认专有网络"},"vswitchId":{"label":"交换机","prompt":"选择交换机...","default":"默认交换机"},"privateIp":{"label":"私有IP","placeholder":"专用网络中的私有 IP"},"privateAddressOnly":{"label":"仅私网IP"},"internetChargeType":{"label":"带宽计费模式","prompt":"选择计费模式..."},"internetChargeTypes":{"payByTraffic":"按使用流量计费","payByBandwidth":"按固定带宽计费"},"securitySection":{"label":"安全","detail":"选择实例所需要配置的安全组。"},"securityGroup":{"label":"安全组","placeholder":"安全组","prompt":"选择安全组...","defaultCreate":"自动创建<code>{groupName}</code>安全组。"},"sshPassword":{"label":"SSH密码","placeholder":"创建实例后SSH远程登录密码(非必填)","provided":"已提供"},"tags":{"addActionLabel":"添加实例标签","valueLabel":"标签","placeholder":"例如: dev"},"errors":{"nameRequired":"模板名称必须输入","zoneIdRequired":"请选择可用区","vpcIdRequired":"请选择专有网络","vswitchIdRequired":"请选择交换机","imageIdRequired":"请选择镜像","accessKeyRequired":"请输入访问秘钥","accessSecretRequired":"请输入访问秘钥令牌","sshPasswordLengthNotValid":"SSH密码的长度应为8至30之间","sshPasswordInvalidCharacter":"SSH密码包含非法字符","sshPasswordFormatError":"SSH密码必须至少包括大写字符，小写字符，数字和特殊字符中的三种","nameNotValidForApp":"根据{appName}主机名规则该名称无效。"}}}},
+  'zh-hant': {"nodeDriver":{"aliyunecs":{"accountSection":{"label":"1. 訪問令牌","detail":"配置用於創建阿里雲主機的訪問令牌","next":"下一步: 認證&配置網絡","loading":"正在獲取阿里雲區域信息..."},"access":{"next":"下一步: 認證&配置網絡","loading":"從Alicloud ECS加載可用區域","title":"帳戶訪問","detail":"選擇將用於啟動阿里巴巴Kubernetes服務的地區和API密鑰"},"apiEndpoint":{"label":"(可選)阿里雲私有部署API地址","placeholder":"阿里雲私有部署API地址"},"instanceOptionsSection":{"label":"實例","detail":"設置即將創建的阿里雲實例"},"instanceDescription":{"label":"實例描述","placeholder":"該實例的描述"},"instanceType":{"label":"實例類型","placeholder":"實例類型"},"systemImage":{"label":"系統鏡像","placeholder":"系統鏡像"},"internetMaxBandwidth":{"label":"最大網絡帶寬","placeholder":"1到200"},"aliyunSLB":{"label":"阿里雲SLB ID","placeholder":"阿里雲SLB ID"},"instanceSection":{"next":"下一步: 配置存儲選項","loading":"正在獲取阿里雲存儲類型..."},"storageSection":{"label":"存儲","detail":"配置通過該模版創建的實例的存儲選項","next":"下一步: 配置阿里雲實例選項","loading":"正在獲取主機類型和系統鏡像..."},"ioOptimized":{"label":"存儲IO優化","optimized":"優化","none":"不優化"},"disk":{"cloud":"普通雲盤","ephemeralSsd":"本地SSD盤","efficiency":"高效雲盤","ssd":"SSD 雲盤","essd":"ESSD 雲盤"},"systemDiskCategory":{"label":"系統盤種類"},"systemDiskSize":{"label":"系統磁盤大小","placeholder":"容量範圍: 20 ~ 500"},"dataDiskCategory":{"label":"數據盤種類"},"dataDiskSize":{"label":"數據磁盤大小","placeholder":"容量範圍: 0 ~ 32768"},"resourceGroup":{"label":"資源組","all":"賬號全部資源"},"region":{"label":"區域","placeholder":"區域"},"zone":{"label":"可用區","prompt":"選擇可用區..."},"networkSection":{"label":"網絡","detail":"配置通過該模版創建的實例的網絡選項","next":"下一步: 配置阿里雲實例選項","loading":"正在獲取主機類型和系統鏡像..."},"routeCIDR":{"label":"路由CIDR","placeholder":"例如: 192.168.1.0/24"},"vpcId":{"label":"專有網絡","prompt":"選擇專有網絡...","default":"默認專有網絡"},"vswitchId":{"label":"交換機","prompt":"選擇交換機...","default":"默認交換機"},"privateIp":{"label":"私有IP","placeholder":"專用網絡中的私有 IP"},"privateAddressOnly":{"label":"僅私網IP"},"internetChargeType":{"label":"帶寬計費模式","prompt":"選擇計費模式..."},"internetChargeTypes":{"payByTraffic":"按使用流量計費","payByBandwidth":"按固定帶寬計費"},"securitySection":{"label":"安全","detail":"選擇實例所需要配置的安全組。"},"securityGroup":{"label":"安全組","placeholder":"安全組","prompt":"選擇安全組...","defaultCreate":"自動創建<code>{groupName}</code>安全組。"},"sshPassword":{"label":"SSH密碼","placeholder":"創建實例後SSH遠程登錄密碼(非必填)","provided":"已提供"},"tags":{"addActionLabel":"添加實例標籤","valueLabel":"標籤","placeholder":"例如: dev"},"errors":{"nameRequired":"模板名稱必須輸入","zoneIdRequired":"請選擇可用區","vpcIdRequired":"請選擇專有網絡","vswitchIdRequired":"請選擇交換機","imageIdRequired":"請選擇鏡像","accessKeyRequired":"請輸入訪問秘鑰","accessSecretRequired":"請輸入訪問秘鑰令牌","sshPasswordLengthNotValid":"SSH密碼的長度應為8至30之間","sshPasswordInvalidCharacter":"SSH密碼包含非法字符","sshPasswordFormatError":"SSH密碼必須至少包括大寫字符，小寫字符，數字和特殊字符中的三種","nameNotValidForApp":"根據{appName}主機名規則該名稱無效。"}}}},
+  'zh-hant-tw': {"nodeDriver":{"aliyunecs":{"accountSection":{"label":"1. 訪問令牌","detail":"配置用於創建阿里雲主機的訪問令牌","next":"下一步: 認證&配置網路","loading":"正在獲取阿里雲區域信息..."},"access":{"next":"下一步: 認證&配置網路","loading":"從Alicloud ECS載入可用區域","title":"帳戶訪問","detail":"選擇將用於啟動阿里巴巴Kubernetes服務的地區和API密鑰"},"apiEndpoint":{"label":"(可選)阿里雲私有部署API地址","placeholder":"阿里雲私有部署API地址"},"instanceOptionsSection":{"label":"實例","detail":"設置即將創建的阿里雲實例"},"instanceDescription":{"label":"實例描述","placeholder":"該實例的描述"},"instanceType":{"label":"實例類型","placeholder":"實例類型"},"systemImage":{"label":"系統鏡像","placeholder":"系統鏡像"},"internetMaxBandwidth":{"label":"最大網路帶寬","placeholder":"1到200"},"aliyunSLB":{"label":"阿里雲SLB ID","placeholder":"阿里雲SLB ID"},"instanceSection":{"next":"下一步: 配置存儲選項","loading":"正在獲取阿里雲存儲類型..."},"storageSection":{"label":"存儲","detail":"配置通過該模版創建的實例的存儲選項","next":"下一步: 配置阿里雲實例選項","loading":"正在獲取主機類型和系統鏡像..."},"ioOptimized":{"label":"存儲IO優化","optimized":"優化","none":"不優化"},"disk":{"cloud":"普通雲盤","ephemeralSsd":"本地SSD盤","efficiency":"高效雲盤","ssd":"SSD 雲盤","essd":"ESSD 雲盤"},"systemDiskCategory":{"label":"系統盤種類"},"systemDiskSize":{"label":"系統磁碟大小","placeholder":"容量範圍: 20 ~ 500"},"dataDiskCategory":{"label":"數據盤種類"},"dataDiskSize":{"label":"數據磁碟大小","placeholder":"容量範圍: 0 ~ 32768"},"resourceGroup":{"label":"資源組","all":"賬號全部資源"},"region":{"label":"區域","placeholder":"區域"},"zone":{"label":"可用區","prompt":"選擇可用區..."},"networkSection":{"label":"網路","detail":"配置通過該模版創建的實例的網路選項","next":"下一步: 配置阿里雲實例選項","loading":"正在獲取主機類型和系統鏡像..."},"routeCIDR":{"label":"路由CIDR","placeholder":"例如: 192.168.1.0/24"},"vpcId":{"label":"專有網路","prompt":"選擇專有網路...","default":"默認專有網路"},"vswitchId":{"label":"交換機","prompt":"選擇交換機...","default":"默認交換機"},"privateIp":{"label":"私有IP","placeholder":"專用網路中的私有 IP"},"privateAddressOnly":{"label":"僅私網IP"},"internetChargeType":{"label":"帶寬計費模式","prompt":"選擇計費模式..."},"internetChargeTypes":{"payByTraffic":"按使用流量計費","payByBandwidth":"按固定帶寬計費"},"securitySection":{"label":"安全","detail":"選擇實例所需要配置的安全組。"},"securityGroup":{"label":"安全組","placeholder":"安全組","prompt":"選擇安全組...","defaultCreate":"自動創建<code>{groupName}</code>安全組。"},"sshPassword":{"label":"SSH密碼","placeholder":"創建實例後SSH遠程登錄密碼(非必填)","provided":"已提供"},"tags":{"addActionLabel":"添加實例標籤","valueLabel":"標籤","placeholder":"例如: dev"},"errors":{"nameRequired":"模板名稱必須輸入","zoneIdRequired":"請選擇可用區","vpcIdRequired":"請選擇專有網路","vswitchIdRequired":"請選擇交換機","imageIdRequired":"請選擇鏡像","accessKeyRequired":"請輸入訪問秘鑰","accessSecretRequired":"請輸入訪問秘鑰令牌","sshPasswordLengthNotValid":"SSH密碼的長度應為8至30之間","sshPasswordInvalidCharacter":"SSH密碼包含非法字元","sshPasswordFormatError":"SSH密碼必須至少包括大寫字元，小寫字元，數字和特殊字元中的三種","nameNotValidForApp":"根據{appName}主機名規則該名稱無效。"}}}},
 };
 const ENDPOINT = 'https://ecs.aliyuncs.com';
 const RESOURCE_GROUP_ENDPOINT = 'resourcemanager.aliyuncs.com';
@@ -89,6 +89,8 @@ export default Ember.Component.extend(NodeDriver, {
   systemDiskChoices: [],
   dataDiskChoices:   [],
 
+  cloudCredentialDriverName: 'aliyun',
+
   step:      1,
 
   lanChanged:    null,
@@ -133,27 +135,14 @@ export default Ember.Component.extend(NodeDriver, {
     async alyLogin(cb) {
       setProperties(this, {
         'errors':                 null,
-        'config.accessKeyId':     (get(this, 'config.accessKeyId') || '').trim(),
-        'config.accessKeySecret': (get(this, 'config.accessKeySecret') || '').trim(),
       });
 
       const errors = [];
       const intl = get(this, 'intl');
 
-      const accessKey = get(this, 'config.accessKeyId');
-      const accessSecret = get(this, 'config.accessKeySecret');
-
-      if (!accessKey) {
-        errors.push(intl.t('nodeDriver.aliyunecs.errors.accessKeyRequired'));
-      }
-
-      if (!accessSecret) {
-        errors.push(intl.t('nodeDriver.aliyunecs.errors.accessSecretRequired'));
-      }
-
       if (errors.length > 0) {
         set(this, 'errors', errors);
-        cb();
+        cb && cb();
 
         return;
       }
@@ -162,13 +151,21 @@ export default Ember.Component.extend(NodeDriver, {
         await all([this.fetchResourceGroups(), this.fetchRegions()]);
         this.regionDidChange();
         set(this, 'step', 2);
-        cb();
+        cb && cb();
       } catch (e) {
         errors.push(get(e, 'body.Message') || e);
         set(this, 'errors', errors);
-        cb();
+        cb && cb();
 
         return;
+      }
+    },
+
+    finishAndSelectCloudCredential(cred) {
+      if (cred) {
+        set(this, 'primaryResource.cloudCredentialId', get(cred, 'id'));
+
+        this.send('alyLogin');
       }
     },
 
@@ -186,13 +183,13 @@ export default Ember.Component.extend(NodeDriver, {
 
       if ( errors.length > 0 ) {
         set(this, 'errors', errors);
-        cb();
+        cb && cb();
 
         return;
       }
 
       set(this, 'step', 4);
-      cb();
+      cb && cb();
     },
 
     loadInstanceTypes(cb) {
@@ -218,7 +215,7 @@ export default Ember.Component.extend(NodeDriver, {
 
       if ( errors.length > 0 ) {
         set(this, 'errors', errors);
-        cb();
+        cb && cb();
 
         return;
       }
@@ -227,7 +224,7 @@ export default Ember.Component.extend(NodeDriver, {
         set(this, 'config.securityGroup', 'docker-machine')
       }
 
-      this.fetch('InstanceType', 'InstanceTypes', { RegionId: get(this, 'config.region') })
+      this.fetch('InstanceType', 'InstanceTypes', { regionId: get(this, 'config.region') })
         .then((instanceTypes) => {
           this.fetchAvailableInstanceTypes().then((availableResources) => {
             set(this, 'instanceTypes', instanceTypes.filter((instanceType) => availableResources.indexOf(instanceType.value) > -1).map((instanceType) => {
@@ -258,7 +255,7 @@ export default Ember.Component.extend(NodeDriver, {
 
           errors.pushObject(err.message || err);
           set(this, 'errors', errors);
-          cb();
+          cb && cb();
 
           return;
         });
@@ -343,12 +340,12 @@ export default Ember.Component.extend(NodeDriver, {
     const intl = get(this, 'intl');
     const resourceGroupId = get(this, 'config.resourceGroupId');
     const externalParams = {
-      RegionId: get(this, 'config.region'),
+      regionId: get(this, 'config.region'),
       vpcId: get(this, 'config.vpcId')
     };
 
     if (!!resourceGroupId && resourceGroupId !== '') {
-      externalParams.ResourceGroupId = resourceGroupId;
+      externalParams.resourceGroupId = resourceGroupId;
     }
 
     if ( get(this, 'config.vpcId') && !get(this, 'vswitches') ) {
@@ -377,7 +374,7 @@ export default Ember.Component.extend(NodeDriver, {
     const vpcId = get(this, 'config.vpcId');
     const resourceGroupId = get(this, 'config.resourceGroupId');
     const externalParams = {
-      RegionId: get(this, 'config.region'),
+      regionId: get(this, 'config.region'),
       vpcId
     };
 
@@ -452,7 +449,7 @@ export default Ember.Component.extend(NodeDriver, {
     const region = get(this, 'config.region');
     const resourceGroupId = get(this, 'config.resourceGroupId');
     const externalParams = {
-      RegionId: region,
+      regionId: region,
     };
 
     if (!!resourceGroupId && resourceGroupId !== '') {
@@ -487,7 +484,7 @@ export default Ember.Component.extend(NodeDriver, {
         }
       });
 
-      this.fetch('Zone', 'Zones', { RegionId: get(this, 'config.region') }).then((zones) => {
+      this.fetch('Zone', 'Zones', { regionId: get(this, 'config.region') }).then((zones) => {
         set(this, 'zones', zones);
         const selectedZone = get(this, 'config.zone');
 
@@ -643,6 +640,14 @@ export default Ember.Component.extend(NodeDriver, {
     }
   }),
 
+  cloudCredentialChoices: computed('cloudCredentials', function() {
+    return this.cloudCredentials.filter((cc) => get(cc, 'aliyunecscredentialConfig'));
+  }),
+
+  selectedCloudCredential: computed('primaryResource.cloudCredentialId', 'cloudCredentials.length', function() {
+    return get(this, 'cloudCredentials').findBy('id', get(this, 'primaryResource.cloudCredentialId'))
+  }),
+
   resetVswitch() {
     const switches = get(this, 'filteredVSwitches');
     const selectedVSwitch = get(this, 'config.vswitchId');
@@ -690,14 +695,14 @@ export default Ember.Component.extend(NodeDriver, {
     const zone    = get(this, 'config.zone')
     let results = [];
     const params  = {
-      RegionId:           region,
-      SystemDiskCategory: get(this, 'config.systemDiskCategory'),
-      DataDiskCategory:   get(this, 'config.diskCategory'),
-      DestinationResource: 'InstanceType'
+      regionId:           region,
+      systemDiskCategory: get(this, 'config.systemDiskCategory'),
+      dataDiskCategory:   get(this, 'config.diskCategory'),
+      destinationResource: 'InstanceType'
     };
 
     if ( get(this, 'config.zone') ) {
-      params['ZoneId'] = get(this, 'config.zone');
+      params['zoneId'] = get(this, 'config.zone');
     }
 
     return new EmberPromise((resolve, reject) => {
@@ -715,12 +720,12 @@ export default Ember.Component.extend(NodeDriver, {
 
     return new EmberPromise((resolve, reject) => {
       this.fetch('', 'AvailableResource', {
-        RegionId:             get(this, 'config.region'),
-        ZoneId:               get(this, 'config.zone'),
-        InstanceType:         get(this, 'config.instanceType'),
-        NetworkCategory:      'vpc',
-        IoOptimized:          'optimized',
-        DestinationResource:  'SystemDisk'
+        regionId:             get(this, 'config.region'),
+        zoneId:               get(this, 'config.zone'),
+        instanceType:         get(this, 'config.instanceType'),
+        networkCategory:      'vpc',
+        ioOptimized:          'optimized',
+        destinationResource:  'SystemDisk'
       }).then((res) => {
         const selectedDisk = get(this, `config.systemDiskCategory`);
 
@@ -753,13 +758,13 @@ export default Ember.Component.extend(NodeDriver, {
 
     return new EmberPromise((resolve, reject) => {
       this.fetch('', 'AvailableResource', {
-        RegionId:             get(this, 'config.region'),
-        ZoneId:               get(this, 'config.zone'),
-        InstanceType:         get(this, `config.instanceType`),
-        NetworkCategory:      'vpc',
-        SystemDiskCategory:   get(this, 'config.systemDiskCategory'),
-        IoOptimized:          'optimized',
-        DestinationResource:  'DataDisk'
+        regionId:             get(this, 'config.region'),
+        zoneId:               get(this, 'config.zone'),
+        instanceType:         get(this, `config.instanceType`),
+        networkCategory:      'vpc',
+        systemDiskCategory:   get(this, 'config.systemDiskCategory'),
+        ioOptimized:          'optimized',
+        destinationResource:  'DataDisk'
       }).then((res) => {
         const selectedDisk = get(this, 'config.dataDiskCategory');
 
@@ -810,14 +815,14 @@ export default Ember.Component.extend(NodeDriver, {
   loadImages(cb) {
     const resourceGroupId = get(this, 'config.resourceGroupId');
     const externalParams = {
-      RegionId: get(this, 'config.region'),
-      InstanceType: get(this, 'config.instanceType'),
-      ImageOwnerAlias: 'system',
-      IsSupportIoOptimized: true
+      regionId: get(this, 'config.region'),
+      instanceType: get(this, 'config.instanceType'),
+      imageOwnerAlias: 'system',
+      isSupportIoOptimized: true
     };
 
     if (!!resourceGroupId && resourceGroupId !== '') {
-      externalParams.ResourceGroupId = resourceGroupId;
+      externalParams.resourceGroupId = resourceGroupId;
     }
 
     this.fetch('Image', 'Images', externalParams)
@@ -859,55 +864,52 @@ export default Ember.Component.extend(NodeDriver, {
       });
   },
 
+  toLowerCaseInitial(name){
+    return name.charAt(0).toLowerCase() + name.slice(1);
+  },
+
   fetch(resource, plural, externalParams = {}, page = 1) {
+    let resourceName = '';
+    if(resource){
+      resourceName = this.toLowerCaseInitial(resource);
+    } else {
+      resourceName  = this.toLowerCaseInitial(plural)
+    }
+    if(resourceName === 'vSwitch'){
+      resourceName = 'vswitch'
+    }
+
+    let acceptLanguage = 'zh-CN';
+
+    if (get(this, 'intl.locale.firstObject') === 'en-us') {
+      acceptLanguage = 'en-US';
+    };
+
+    const cloudCredentialId = get(this, 'primaryResource.cloudCredentialId')
+    
     const results = [];
     const location = window.location;
-    let endpoint = get(this, 'config.apiEndpoint') ? get(this, 'config.apiEndpoint') : ENDPOINT;
-    const AccessKeyId = get(this, 'config.accessKeyId');
-    const secretAccessKey = get(this, 'config.accessKeySecret');
-    const date = new Date();
     let req = {};
-    let params = Object.assign({}, externalParams, {
-      AccessKeyId,
-      Action:           `Describe${ plural }`,
-      Format:           'JSON',
-      SignatureMethod:  'HMAC-SHA1',
-      SignatureNonce:   String(date.getTime()) + String(Math.random()).substring(2, 6),
-      SignatureVersion: '1.0',
-      Timestamp:        date.toISOString(),
-      Version:          '2014-05-26',
-    });
 
-    if (get(this, 'app.proxyEndpoint') === undefined) {
-      return;
-    }
+    const url = `${location.origin}/meta/ack/${resourceName}`
+    const query = Object.assign({}, externalParams, {
+      cloudCredentialId,
+      acceptLanguage,
+    })
 
-    if(plural === 'Vpcs' || plural === 'VSwitches') {
-      params.Version = '2016-04-28';
-      endpoint = VPC_ENDPOINT;
-    }
-
-    if (plural === 'ResourceGroups') {
-      params.Action  = 'ListResourceGroups';
-      params.Version = '2020-03-31';
-      endpoint = RESOURCE_GROUP_ENDPOINT;
-    }
-
-    params.PageSize = PAGE_SIZE;
-    params.PageNumber = page;
-    params.Signature = this.getSignature(secretAccessKey, params);
-
-    endpoint = `${ get(this, 'app.proxyEndpoint')  }/${  endpoint.replace('//', '/') }`;
-    endpoint = `${ location.origin }${ endpoint }`;
+    query.pageSize = PAGE_SIZE;
+    query.pageNumber = page;
 
     req = {
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-      url:     endpoint,
-      method:  'POST',
-      body:    this.getQueryParamsString(params)
-    }
+      url:     `${url}?${this.getQueryParamsString(query)}`,
+      method:  'GET',
+    };
 
     return new EmberPromise((resolve, reject) => {
+      if(!cloudCredentialId){
+        console.error(`${resourceName}: "cloudCredentialId" not found`)
+        return resolve(results);
+      }
       get(this, 'globalStore').rawRequest(req).then((res) => {
         if (resource === '') {
           return resolve(res.body);
@@ -924,25 +926,21 @@ export default Ember.Component.extend(NodeDriver, {
         }));
 
         if (res.body.TotalCount > ((PAGE_SIZE * (page - 1)) + current.length)) {
-          const promise = this.fetch(resource, plural, externalParams, page + 1);
-          if(promise === undefined) {
-            return;
-          }
-          return promise
+          return this.fetch(resource, plural, externalParams, page + 1)
             .then((array) => {
               results.pushObjects(array);
               resolve(results);
             })
             .catch((err) => {
-              reject(err);
+              reject(get(err, 'body.detail') || err);
             });
         } else {
           resolve(results);
         }
       }).catch((err) => {
-        reject(err)
+        reject(get(err, 'body.detail') || err);
       });
-    })
+    });
   },
 
   getSignature(secretAccessKey, params) {

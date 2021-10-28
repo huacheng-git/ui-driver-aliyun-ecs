@@ -1,75 +1,45 @@
 <section class="horizontal-form">
   {{#accordion-list showExpandAll=false as | al expandFn |}}
     {{#accordion-list-item
-            title=(t "nodeDriver.aliyunecs.accountSection.label")
-            detail=(t "nodeDriver.aliyunecs.accountSection.detail")
-            expandAll=expandAll
-            expand=(action expandFn)
-            expandOnInit=true
+      title=(t "nodeDriver.aliyunecs.access.title")
+      detail=(t "nodeDriver.aliyunecs.access.detail")
+      expandAll=expandAll
+      expand=(action expandFn)
+      expandOnInit=true
     }}
-      <div class="row">
-        <div class="col span-6">
-          <label class="acc-label">
-            {{t "nodeDriver.aliyunecs.accessKey.label"}}{{field-required}}
-          </label>
-          {{#input-or-display
-                  editable=(eq step 1)
-                  value=config.accessKeyId
-          }}
-            {{input
-                    type="text"
-                    class="form-control"
-                    value=config.accessKeyId
-                    placeholder=(t "nodeDriver.aliyunecs.accessKey.placeholder")
-            }}
-          {{/input-or-display}}
-        </div>
-        <div class="col span-6">
-          <label class="acc-label">
-            {{t "nodeDriver.aliyunecs.accessKeySecret.label"}}{{field-required}}
-          </label>
-          {{#if (eq step 1)}}
-            {{input
-                    type="password"
-                    class="form-control"
-                    value=config.accessKeySecret
-                    placeholder=(t "nodeDriver.aliyunecs.accessKeySecret.placeholder")
-            }}
-          {{else}}
-            <div class="text-muted text-italic">
-              {{t "nodeDriver.aliyunecs.accessKeySecret.provided"}}
+      {{#if (eq step 1)}}
+        {{form-auth-cloud-credential
+          cloudCredentials=cloudCredentials
+          driverName=cloudCredentialDriverName
+          parseAndCollectErrors=(action "errorHandler")
+          finishAndSelectCloudCredential=(action "finishAndSelectCloudCredential")
+          primaryResource=primaryResource
+          region=config.region
+          hideSave=true
+        }}
+      {{else}}
+        <div class="row">
+          <div class="col span-4">
+            <label class="acc-label">
+              {{t "formAuthCloudCredential.label"}}
+            </label>
+            <div>
+              {{selectedCloudCredential.displayName}}
             </div>
-          {{/if}}
+          </div>
         </div>
-      </div>
-
-      <div class="row">
-        <div class="col span-6">
-          <label class="acc-label">
-            {{t "nodeDriver.aliyunecs.apiEndpoint.label"}}
-          </label>
-          {{#input-or-display
-                  editable=(eq step 1)
-                  value=config.apiEndpoint
-          }}
-            {{input
-                    type="text"
-                    class="form-control"
-                    value=config.apiEndpoint
-                    placeholder=(t "nodeDriver.aliyunecs.apiEndpoint.placeholder")
-            }}
-          {{/input-or-display}}
-        </div>
-      </div>
+      {{/if}}
     {{/accordion-list-item}}
 
     {{#if (eq step 1)}}
       {{top-errors errors=errors}}
       {{save-cancel
+              editing=(eq mode "edit")
               save=(action "alyLogin")
               cancel=(action "cancel")
               createLabel="nodeDriver.aliyunecs.accountSection.next"
               savingLabel="nodeDriver.aliyunecs.accountSection.loading"
+              saveDisabled=(not primaryResource.cloudCredentialId)
       }}
     {{/if}}
 
