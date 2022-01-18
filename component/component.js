@@ -572,7 +572,7 @@ export default Ember.Component.extend(NodeDriver, {
       return ''
     }
   }),
-  
+
   zoneShowValue: computed('intl.locale', 'config.zone', 'zones.[]', function() {
     const zoneId = get(this,'config.zone');
     const zones = get(this, 'zones') || [];
@@ -743,7 +743,7 @@ export default Ember.Component.extend(NodeDriver, {
           const found = get(this, 'systemDiskChoices').findBy('value', selectedDisk);
 
           if (!found) {
-            set(this, `config.${ prefix }SystemDiskCategory`, null);
+            set(this, 'config.systemDiskCategory', null);
           }
         }
         resolve(results);
@@ -798,6 +798,10 @@ export default Ember.Component.extend(NodeDriver, {
   getAvailableResources(res) {
     const results = [];
     const zones = res['AvailableZones'];
+
+    if(!zones){
+      return results;
+    }
 
     zones.AvailableZone.forEach((zone) => {
       zone['AvailableResources']['AvailableResource'].forEach((resource) => {
@@ -886,7 +890,7 @@ export default Ember.Component.extend(NodeDriver, {
     };
 
     const cloudCredentialId = get(this, 'primaryResource.cloudCredentialId')
-    
+
     const results = [];
     const location = window.location;
     let req = {};
@@ -908,6 +912,9 @@ export default Ember.Component.extend(NodeDriver, {
     return new EmberPromise((resolve, reject) => {
       if(!cloudCredentialId){
         console.error(`${resourceName}: "cloudCredentialId" not found`)
+        return resolve(results);
+      }
+      if(get(this, 'step') === 4){ // Prevents the interface from being called after the page has been destroyed
         return resolve(results);
       }
       get(this, 'globalStore').rawRequest(req).then((res) => {
