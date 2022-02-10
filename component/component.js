@@ -911,12 +911,9 @@ export default Ember.Component.extend(NodeDriver, {
 
     return new EmberPromise((resolve, reject) => {
       if(!cloudCredentialId){
-        console.error(`${resourceName}: "cloudCredentialId" not found`)
         return resolve(results);
       }
-      if(get(this, 'step') === 4){ // Prevents the interface from being called after the page has been destroyed
-        return resolve(results);
-      }
+
       get(this, 'globalStore').rawRequest(req).then((res) => {
         if (resource === '') {
           return resolve(res.body);
