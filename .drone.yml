@@ -22,9 +22,9 @@ steps:
   image: wangsiye/aliyun-ossutil:latest
   environment:
     OSS_KEY_ID:
-      from_secret: aliyun_access_id
+      from_secret: OSS_KEY_ID
     OSS_KEY_SECRET:
-      from_secret: aliyun_access_secret
+      from_secret: OSS_KEY_SECRET
   commands:
   - ossutil config  -L CH -e "oss-cn-shenzhen.aliyuncs.com" -i $OSS_KEY_ID -k $OSS_KEY_SECRET
   - ossutil cp -rf ./dist oss://dev-tool/aliyun-ecs
@@ -35,12 +35,12 @@ steps:
 - name: deployment-to-oss
   image: wangsiye/aliyun-ossutil:latest
   environment:
-    OSS_KEY_ID:
+    ALIYUN_ACCESS_KEY_ID:
       from_secret: aliyun_access_id
-    OSS_KEY_SECRET:
+    ALIYUN_SECRET_ACCESS_KEY:
       from_secret: aliyun_access_secret
   commands:
-  - ossutil config  -L CH -e "oss-cn-beijing.aliyuncs.com" -i $OSS_KEY_ID -k $OSS_KEY_SECRET
+  - ossutil config  -L CH -e "oss-cn-beijing.aliyuncs.com" -i $ALIYUN_ACCESS_KEY_ID -k $ALIYUN_SECRET_ACCESS_KEY
   - ossutil cp -rf ./dist oss://rancher2-drivers/pandaria/ui/node-driver-aliyun/${DRONE_TAG}
   when:
     event:
