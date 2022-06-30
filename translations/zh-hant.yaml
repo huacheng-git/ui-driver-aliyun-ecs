@@ -112,6 +112,27 @@ nodeDriver:
       addActionLabel: 添加實例標籤
       valueLabel: 標籤
       placeholder: '例如: dev'
+    instanceChargeType:
+      label: 實例付費模式
+      prePaid: 包年包月
+      postPaid: 按量付費
+      spotStrategy: 搶佔式實例
+    periodUnit:
+      label: 購買資源的時長
+      placeholder: 選擇購買資源時長...
+      week: 周
+      month: 個月
+      year: 年
+      half: 半
+    spotDuration:
+      label: 搶佔式實例使用時長
+      default: 設定實例使用1小時
+      none: 無確定使用時長
+    spotStrategy:
+      label: 搶佔式實例單台實例規格上限價
+      spotAsPriceGo: 使用自動出價
+      spotWithPriceLimit: 設置單台上限價
+      suffix: ￥/小時
     errors:
       nameRequired: 模板名稱必須輸入
       zoneIdRequired: 請選擇可用區
