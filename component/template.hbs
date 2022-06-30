@@ -212,6 +212,93 @@
         <div class="row">
           <div class="col span-6">
             <label class="acc-label">
+              {{t "nodeDriver.aliyunecs.instanceChargeType.label"}}{{field-required}}
+            </label>
+          {{#input-or-display editable=(eq step 3) value=config.instanceType}}
+            {{new-select
+              classNames="form-control"
+              content=instanceChargeTypeOptions
+              value=instanceChargeType
+              change=(action 'instanceChargeTypeChange')
+            }}
+          {{/input-or-display}}
+          </div>
+
+          {{#if (eq instanceChargeType 'PrePaid')}}
+          <div class="col span-6">
+            <label class="acc-label">
+              {{t "nodeDriver.aliyunecs.periodUnit.label"}}{{field-required}}
+            </label>
+          {{#input-or-display editable=(eq step 3) value=config.instanceType}}
+            {{new-select
+              classNames="form-control"
+              content=periodUnitOptions
+              value=periodUnit
+              change=(action 'periodUnitChange')
+            }}
+          {{/input-or-display}}
+          </div>
+          {{/if}}
+        </div>
+
+        {{#if (eq instanceChargeType 'SpotStrategy')}}
+        <div class="row">
+          <div class="col span-6">
+            <label class="acc-label">{{t "nodeDriver.aliyunecs.spotDuration.label"}}</label>
+            <div class="radio">
+              <label>
+                {{radio-button disabled=(not-eq step 3) selection=config.spotDuration value='1'}}
+                {{t 'nodeDriver.aliyunecs.spotDuration.default'}}
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                {{radio-button disabled=(not-eq step 3) selection=config.spotDuration value='0'}}
+                {{t 'nodeDriver.aliyunecs.spotDuration.none'}}
+              </label>
+            </div>
+          </div>
+
+          <div class="col span-6">
+            <label class="acc-label">{{t "nodeDriver.aliyunecs.spotStrategy.label"}}</label>
+            <div class="radio">
+              <label>
+                {{radio-button disabled=(not-eq step 3) selection=config.spotStrategy value='SpotAsPriceGo'}}
+                {{t 'nodeDriver.aliyunecs.spotStrategy.spotAsPriceGo'}}
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                {{radio-button disabled=(not-eq step 3) selection=config.spotStrategy value='SpotWithPriceLimit'}}
+                {{t 'nodeDriver.aliyunecs.spotStrategy.spotWithPriceLimit'}}
+              </label>
+            </div>
+            {{#if (eq config.spotStrategy 'SpotWithPriceLimit')}}
+            <div class="input-group">
+              {{#if (eq step 3)}}
+                {{input
+                  type="number"
+                  min=1
+                  max=10000
+                  maxPrecision=3
+                  class="form-control"
+                  value=config.spotPriceLimit
+                  change=(action 'spotPriceLimitChange')
+                }}
+                <div class="input-group-addon bg-default">{{t 'nodeDriver.aliyunecs.spotStrategy.suffix'}}</div>
+              {{else}}
+                {{config.spotPriceLimit}} {{t 'nodeDriver.aliyunecs.spotStrategy.suffix'}}
+              {{/if}}
+            </div>
+            {{/if}}
+          </div>
+
+        </div>
+        {{/if}}
+
+        <div class="row">
+          <div class="col span-6">
+            <label class="acc-label">
               {{t "nodeDriver.aliyunecs.instanceDescription.label"}}
             </label>
           {{#input-or-display editable=(eq step 3) value=config.description}}
