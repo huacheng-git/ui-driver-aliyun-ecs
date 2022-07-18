@@ -49,6 +49,7 @@ nodeDriver:
       efficiency: Ultra Disk
       ssd: SSD Disk
       essd: ESSD Disk
+      auto: AutoPL Disk
     systemDiskCategory:
       label: System Disk Category
     systemDiskSize:

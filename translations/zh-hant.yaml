@@ -49,6 +49,7 @@ nodeDriver:
       efficiency: 高效雲盤
       ssd: SSD 雲盤
       essd: ESSD 雲盤
+      auto: AutoPL 雲盤
     systemDiskCategory:
       label: 系統盤種類
     systemDiskSize:
