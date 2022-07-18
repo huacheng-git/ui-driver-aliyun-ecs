@@ -378,7 +378,7 @@
             {{#input-or-display editable=(eq step 4) value=config.systemDiskSize}}
               <div class="input-group">
                 {{input-integer
-                        min=20
+                        min=systemDiskMin
                         max=500
                         class="form-control"
                         value=config.systemDiskSize
