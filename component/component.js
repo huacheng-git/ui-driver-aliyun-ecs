@@ -125,7 +125,7 @@ export default Ember.Component.extend(NodeDriver, {
         resourceGroupId:      '',
       });
 
-      set(this, 'model.engineInstallURL', 'https://drivers.rancher.cn/pandaria/docker-install/19.03-aliyun.sh');
+      set(this, 'model.engineInstallURL', 'https://rancher2-drivers.oss-cn-beijing.aliyuncs.com/pandaria/docker-install/19.03-aliyun.sh');
       set(this,'model.engineStorageDriver', 'overlay2');
       set(this, 'model.%%DRIVERNAME%%Config', config);
     }
