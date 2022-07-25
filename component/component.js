@@ -73,6 +73,37 @@ const OPT_CHARGETYPES = [
 
 const DEFAULT_INSTANCE_TYPE = 'ecs.g5.large';
 
+// v2.6.5 => https://www.suse.com/zh-cn/suse-rancher/support-matrix/all-supported-versions/rancher-v2-6-5/
+const IMAGE_VERSIONS = [
+  {
+    type: 'CentOS',
+    version: '7.7, 7.8, 7.9',
+  },
+  {
+    type: 'Oracle Linux',
+    version: '7.7, 7.9, 8.2, 8.3, 8.4',
+  },
+  {
+    type: 'RHEL',
+    version: '7.7, 7.8, 7.9, 8.2, 8.3, 8.4, 8.5',
+  },
+  {
+    type: 'Ubuntu',
+    version: '18.04, 20.04',
+  },
+  {
+    type: 'Rocky Linux',
+    version: '8.4',
+  },
+  {
+    type: 'openSUSE',
+    version: '15.3',
+  },
+  {
+    type: 'SLES',
+    version: '12 SP5,  15 SP1, 15 SP2, 15 SP3',
+  },
+]
 
 /*!!!!!!!!!!!DO NOT CHANGE START!!!!!!!!!!!*/
 export default Ember.Component.extend(NodeDriver, {
@@ -97,6 +128,7 @@ export default Ember.Component.extend(NodeDriver, {
 
   systemDiskChoices: [],
   dataDiskChoices:   [],
+  imageVersions:     IMAGE_VERSIONS,
 
 
   cloudCredentialDriverName: 'aliyun',
@@ -972,15 +1004,24 @@ export default Ember.Component.extend(NodeDriver, {
 
     this.fetch('Image', 'Images', externalParams)
       .then((images) => {
-        set(this, 'images', images.filter((image) => {
-          return image.raw.OSType === 'linux';
-        }).map((image) => {
-          return {
-            label: image.raw.ImageOwnerAlias === 'system' ? image.raw.OSName : image.raw.ImageName,
-            value: image.value,
-            raw:   image.raw,
+        const out = [];
+
+        images.forEach(obj=>{
+          if(obj.raw.OSType === 'linux'){
+            const versions = this.availableImageVersions(obj.raw.Platform);
+
+            if(versions.find(v => obj.raw.OSName.indexOf(v) !== -1)){
+              out.push({
+                label: obj.raw.ImageOwnerAlias === 'system' ? obj.raw.OSName : obj.raw.ImageName,
+                value: obj.value,
+                raw:   obj.raw,
+              });
+            }
           }
-        }));
+        });
+
+        set(this, 'images', out.sortBy('label').reverse());
+
         const imageId = get(this, 'config.imageId');
         let found = get(this, 'images').findBy('value', imageId);
 
@@ -1155,5 +1196,15 @@ export default Ember.Component.extend(NodeDriver, {
       instanceChargeType = 'SpotStrategy';
     }
     set(this, 'instanceChargeType', instanceChargeType);
+  },
+
+  availableImageVersions(type){
+    const support = this.imageVersions.find(obj => obj.type === type);
+
+    if(support){
+      return support.version.split(',');
+    }
+
+    return [];
   }
 });
