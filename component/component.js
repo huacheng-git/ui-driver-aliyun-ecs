@@ -27,9 +27,7 @@ const languages = {
   'zh-hant':    {"nodeDriver":{"aliyunecs":{"accountSection":{"label":"1. 訪問令牌","detail":"配置用於創建阿里雲主機的訪問令牌","next":"下一步: 認證&配置網絡","loading":"正在獲取阿里雲區域信息..."},"access":{"next":"下一步: 認證&配置網絡","loading":"從Alicloud ECS加載可用區域","title":"帳戶訪問","detail":"選擇將用於啟動阿里巴巴Kubernetes服務的地區和API密鑰"},"apiEndpoint":{"label":"(可選)阿里雲私有部署API地址","placeholder":"阿里雲私有部署API地址"},"instanceOptionsSection":{"label":"實例","detail":"設置即將創建的阿里雲實例"},"instanceDescription":{"label":"實例描述","placeholder":"該實例的描述"},"instanceType":{"label":"實例類型","placeholder":"實例類型"},"systemImage":{"label":"系統鏡像","placeholder":"系統鏡像"},"internetMaxBandwidth":{"label":"最大網絡帶寬","placeholder":"1到200"},"aliyunSLB":{"label":"阿里雲SLB ID","placeholder":"阿里雲SLB ID"},"instanceSection":{"next":"下一步: 配置存儲選項","loading":"正在獲取阿里雲存儲類型..."},"storageSection":{"label":"存儲","detail":"配置通過該模版創建的實例的存儲選項","next":"下一步: 配置阿里雲實例選項","loading":"正在獲取主機類型和系統鏡像..."},"ioOptimized":{"label":"存儲IO優化","optimized":"優化","none":"不優化"},"disk":{"cloud":"普通雲盤","ephemeralSsd":"本地SSD盤","efficiency":"高效雲盤","ssd":"SSD 雲盤","essd":"ESSD 雲盤","auto":"AutoPL 雲盤"},"systemDiskCategory":{"label":"系統盤種類"},"systemDiskSize":{"label":"系統磁盤大小","placeholder":"容量範圍: 20 ~ 500"},"dataDiskCategory":{"label":"數據盤種類"},"dataDiskSize":{"label":"數據磁盤大小","placeholder":"容量範圍: 0 ~ 32768"},"resourceGroup":{"label":"資源組","all":"賬號全部資源"},"region":{"label":"區域","placeholder":"區域"},"zone":{"label":"可用區","prompt":"選擇可用區..."},"networkSection":{"label":"網絡","detail":"配置通過該模版創建的實例的網絡選項","next":"下一步: 配置阿里雲實例選項","loading":"正在獲取主機類型和系統鏡像..."},"routeCIDR":{"label":"路由CIDR","placeholder":"例如: 192.168.1.0/24"},"vpcId":{"label":"專有網絡","prompt":"選擇專有網絡...","default":"默認專有網絡"},"vswitchId":{"label":"交換機","prompt":"選擇交換機...","default":"默認交換機"},"privateIp":{"label":"私有IP","placeholder":"專用網絡中的私有 IP"},"privateAddressOnly":{"label":"僅私網IP"},"internetChargeType":{"label":"帶寬計費模式","prompt":"選擇計費模式..."},"internetChargeTypes":{"payByTraffic":"按使用流量計費","payByBandwidth":"按固定帶寬計費"},"securitySection":{"label":"安全","detail":"選擇實例所需要配置的安全組。"},"securityGroup":{"label":"安全組","placeholder":"安全組","prompt":"選擇安全組...","defaultCreate":"自動創建<code>{groupName}</code>安全組。"},"sshPassword":{"label":"SSH密碼","placeholder":"創建實例後SSH遠程登錄密碼(非必填)","provided":"已提供"},"tags":{"addActionLabel":"添加實例標籤","valueLabel":"標籤","placeholder":"例如: dev"},"errors":{"nameRequired":"模板名稱必須輸入","zoneIdRequired":"請選擇可用區","vpcIdRequired":"請選擇專有網絡","vswitchIdRequired":"請選擇交換機","imageIdRequired":"請選擇鏡像","accessKeyRequired":"請輸入訪問秘鑰","accessSecretRequired":"請輸入訪問秘鑰令牌","sshPasswordLengthNotValid":"SSH密碼的長度應為8至30之間","sshPasswordInvalidCharacter":"SSH密碼包含非法字符","sshPasswordFormatError":"SSH密碼必須至少包括大寫字符，小寫字符，數字和特殊字符中的三種","nameNotValidForApp":"根據{appName}主機名規則該名稱無效。"}}}},
   'zh-hant-tw': {"nodeDriver":{"aliyunecs":{"accountSection":{"label":"1. 訪問令牌","detail":"配置用於創建阿里雲主機的訪問令牌","next":"下一步: 認證&配置網路","loading":"正在獲取阿里雲區域信息..."},"access":{"next":"下一步: 認證&配置網路","loading":"從Alicloud ECS載入可用區域","title":"帳戶訪問","detail":"選擇將用於啟動阿里巴巴Kubernetes服務的地區和API密鑰"},"apiEndpoint":{"label":"(可選)阿里雲私有部署API地址","placeholder":"阿里雲私有部署API地址"},"instanceOptionsSection":{"label":"實例","detail":"設置即將創建的阿里雲實例"},"instanceDescription":{"label":"實例描述","placeholder":"該實例的描述"},"instanceType":{"label":"實例類型","placeholder":"實例類型"},"systemImage":{"label":"系統鏡像","placeholder":"系統鏡像"},"internetMaxBandwidth":{"label":"最大網路帶寬","placeholder":"1到200"},"aliyunSLB":{"label":"阿里雲SLB ID","placeholder":"阿里雲SLB ID"},"instanceSection":{"next":"下一步: 配置存儲選項","loading":"正在獲取阿里雲存儲類型..."},"storageSection":{"label":"存儲","detail":"配置通過該模版創建的實例的存儲選項","next":"下一步: 配置阿里雲實例選項","loading":"正在獲取主機類型和系統鏡像..."},"ioOptimized":{"label":"存儲IO優化","optimized":"優化","none":"不優化"},"disk":{"cloud":"普通雲盤","ephemeralSsd":"本地SSD盤","efficiency":"高效雲盤","ssd":"SSD 雲盤","essd":"ESSD 雲盤","auto":"AutoPL 雲盤"},"systemDiskCategory":{"label":"系統盤種類"},"systemDiskSize":{"label":"系統磁碟大小","placeholder":"容量範圍: 20 ~ 500"},"dataDiskCategory":{"label":"數據盤種類"},"dataDiskSize":{"label":"數據磁碟大小","placeholder":"容量範圍: 0 ~ 32768"},"resourceGroup":{"label":"資源組","all":"賬號全部資源"},"region":{"label":"區域","placeholder":"區域"},"zone":{"label":"可用區","prompt":"選擇可用區..."},"networkSection":{"label":"網路","detail":"配置通過該模版創建的實例的網路選項","next":"下一步: 配置阿里雲實例選項","loading":"正在獲取主機類型和系統鏡像..."},"routeCIDR":{"label":"路由CIDR","placeholder":"例如: 192.168.1.0/24"},"vpcId":{"label":"專有網路","prompt":"選擇專有網路...","default":"默認專有網路"},"vswitchId":{"label":"交換機","prompt":"選擇交換機...","default":"默認交換機"},"privateIp":{"label":"私有IP","placeholder":"專用網路中的私有 IP"},"privateAddressOnly":{"label":"僅私網IP"},"internetChargeType":{"label":"帶寬計費模式","prompt":"選擇計費模式..."},"internetChargeTypes":{"payByTraffic":"按使用流量計費","payByBandwidth":"按固定帶寬計費"},"securitySection":{"label":"安全","detail":"選擇實例所需要配置的安全組。"},"securityGroup":{"label":"安全組","placeholder":"安全組","prompt":"選擇安全組...","defaultCreate":"自動創建<code>{groupName}</code>安全組。"},"sshPassword":{"label":"SSH密碼","placeholder":"創建實例後SSH遠程登錄密碼(非必填)","provided":"已提供"},"tags":{"addActionLabel":"添加實例標籤","valueLabel":"標籤","placeholder":"例如: dev"},"errors":{"nameRequired":"模板名稱必須輸入","zoneIdRequired":"請選擇可用區","vpcIdRequired":"請選擇專有網路","vswitchIdRequired":"請選擇交換機","imageIdRequired":"請選擇鏡像","accessKeyRequired":"請輸入訪問秘鑰","accessSecretRequired":"請輸入訪問秘鑰令牌","sshPasswordLengthNotValid":"SSH密碼的長度應為8至30之間","sshPasswordInvalidCharacter":"SSH密碼包含非法字元","sshPasswordFormatError":"SSH密碼必須至少包括大寫字元，小寫字元，數字和特殊字元中的三種","nameNotValidForApp":"根據{appName}主機名規則該名稱無效。"}}}},
 };
-const ENDPOINT = 'https://ecs.aliyuncs.com';
-const RESOURCE_GROUP_ENDPOINT = 'resourcemanager.aliyuncs.com';
-const VPC_ENDPOINT = 'vpc.aliyuncs.com';
+
 const PAGE_SIZE = 50;
 const DEFAULT_IMAGE = 'ubuntu_16_04_64';
 const DISKS = [
@@ -418,19 +416,24 @@ export default Ember.Component.extend(NodeDriver, {
       }
 
       securityGroupsPromise.then((securityGroups) => {
-        set(this, 'securityGroups', securityGroups.map((securityGroup) => {
-          let label = `${ securityGroup.raw.SecurityGroupName } (${ securityGroup.value })`
+        const out = [];
 
-          return {
-            ...securityGroup,
-            value: securityGroup.raw.SecurityGroupName,
+        securityGroups.forEach(obj=>{
+          const label = `${ obj.raw.SecurityGroupName } (${ obj.value })`;
+
+          out.push({
+            ...obj,
+            value: obj.raw.SecurityGroupName,
             label
-          };
-        }));
+          })
+        });
+
+        set(this, 'securityGroups', out);
+
         const selectedSecurityGroup = get(this, 'config.securityGroup');
 
         if (selectedSecurityGroup) {
-          const found = securityGroups.findBy('value', selectedSecurityGroup);
+          const found = out.findBy('value', selectedSecurityGroup);
 
           if (!found) {
             set(this, 'config.securityGroup', 'docker-machine');
