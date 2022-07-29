@@ -482,19 +482,24 @@ export default Ember.Component.extend(NodeDriver, {
       }
 
       securityGroupsPromise.then((securityGroups) => {
-        set(this, 'securityGroups', securityGroups.map((securityGroup) => {
-          let label = `${ securityGroup.raw.SecurityGroupName } (${ securityGroup.value })`
+        const out = [];
 
-          return {
-            ...securityGroup,
-            value: securityGroup.raw.SecurityGroupName,
+        securityGroups.forEach(obj=>{
+          const label = `${ obj.raw.SecurityGroupName } (${ obj.value })`;
+
+          out.push({
+            ...obj,
+            value: obj.raw.SecurityGroupName,
             label
-          };
-        }));
+          })
+        });
+
+        set(this, 'securityGroups', out);
+
         const selectedSecurityGroup = get(this, 'config.securityGroup');
 
         if (selectedSecurityGroup) {
-          const found = securityGroups.findBy('value', selectedSecurityGroup);
+          const found = out.findBy('value', selectedSecurityGroup);
 
           if (!found) {
             set(this, 'config.securityGroup', 'docker-machine');
