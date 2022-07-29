@@ -214,7 +214,7 @@
             <label class="acc-label">
               {{t "nodeDriver.aliyunecs.instanceChargeType.label"}}{{field-required}}
             </label>
-          {{#input-or-display editable=(eq step 3) value=config.instanceType}}
+          {{#input-or-display editable=(eq step 3) value=instanceChargeTypeShowValue}}
             {{new-select
               classNames="form-control"
               content=instanceChargeTypeOptions
@@ -270,7 +270,7 @@
             <div class="radio">
               <label>
                 {{radio-button disabled=(not-eq step 3) selection=config.spotStrategy value='SpotWithPriceLimit'}}
-                {{t 'nodeDriver.aliyunecs.spotStrategy.spotWithPriceLimit'}}
+                {{t 'nodeDriver.aliyunecs.spotStrategy.spotWithPriceLimit.label'}}
               </label>
             </div>
             {{#if (eq config.spotStrategy 'SpotWithPriceLimit')}}
@@ -284,6 +284,7 @@
                   class="form-control"
                   value=config.spotPriceLimit
                   change=(action 'spotPriceLimitChange')
+                  placeholder=(t "nodeDriver.aliyunecs.spotStrategy.spotWithPriceLimit.placeholder")
                 }}
                 <div class="input-group-addon bg-default">{{t 'nodeDriver.aliyunecs.spotStrategy.suffix'}}</div>
               {{else}}

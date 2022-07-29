@@ -131,7 +131,9 @@ nodeDriver:
     spotStrategy:
       label: 搶佔式實例單台實例規格上限價
       spotAsPriceGo: 使用自動出價
-      spotWithPriceLimit: 設置單台上限價
+      spotWithPriceLimit:
+        label: 設置單台上限價
+        placeholder: 例如：0.440
       suffix: ￥/小時
     errors:
       nameRequired: 模板名稱必須輸入

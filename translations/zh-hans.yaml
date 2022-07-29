@@ -131,7 +131,9 @@ nodeDriver:
     spotStrategy:
       label: 抢占式实例单台实例规格上限价
       spotAsPriceGo: 使用自动出价
-      spotWithPriceLimit: 设置单台上限价
+      spotWithPriceLimit:
+        label: 设置单台上限价
+        placeholder: 例如：0.440
       suffix: ￥/小时
     errors:
       nameRequired: 模板名称必须输入

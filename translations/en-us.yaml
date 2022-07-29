@@ -130,7 +130,9 @@ nodeDriver:
       none: None
     spotStrategy:
       label: Maximum Price for Instance Type
-      spotWithPriceLimit: Set Maximum Price
+      spotWithPriceLimit:
+        label: Set Maximum Price
+        placeholder: e.g. 0.440
       spotAsPriceGo: Use Automatic Bid
       suffix: ￥/ hour
     errors:
