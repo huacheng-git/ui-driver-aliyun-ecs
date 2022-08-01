@@ -229,7 +229,7 @@
             <label class="acc-label">
               {{t "nodeDriver.aliyunecs.periodUnit.label"}}{{field-required}}
             </label>
-          {{#input-or-display editable=(eq step 3) value=config.instanceType}}
+          {{#input-or-display editable=(eq step 3) value=periodUnitShowValue}}
             {{new-select
               classNames="form-control"
               content=periodUnitOptions

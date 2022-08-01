@@ -738,6 +738,13 @@ export default Ember.Component.extend(NodeDriver, {
 
     return instanceChargeType ? get(instanceChargeTypeOptions.findBy('value', instanceChargeType), 'label') : '';
   }),
+  periodUnitShowValue: computed('intl.locale', 'config.period', 'config.periodUnit', function() {
+
+    const periodUnit = get(this,'periodUnit');
+    const periodUnitOptions = get(this, 'periodUnitOptions') || [];
+
+    return periodUnit ? get(periodUnitOptions.findBy('value', periodUnit), 'label') : '';
+  }),
 
   zoneShowValue: computed('intl.locale', 'config.zone', 'zones.[]', function() {
     const zoneId = get(this,'config.zone');
