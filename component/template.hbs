@@ -431,7 +431,7 @@
           </div>
           <div class="col span-6">
             <label class="acc-label">
-              {{t "nodeDriver.aliyunecs.systemDiskSize.label"}}
+              {{t "nodeDriver.aliyunecs.systemDiskSize.label"}}{{field-required}}
             </label>
             {{#input-or-display editable=(eq step 4) value=config.systemDiskSize}}
               <div class="input-group">
@@ -440,7 +440,7 @@
                         max=500
                         class="form-control"
                         value=config.systemDiskSize
-                        placeholder=(t "nodeDriver.aliyunecs.systemDiskSize.placeholder")
+                        placeholder=(t "nodeDriver.aliyunecs.systemDiskSize.placeholder" min=systemDiskMin)
                 }}
                 <div class="input-group-addon bg-default">GB</div>
               </div>
@@ -471,11 +471,12 @@
             {{#input-or-display editable=(eq step 4) value=config.diskSize}}
               <div class="input-group">
                 {{input-integer
-                        min=0
+                        min=dataDiskMin
                         max=32768
                         class="form-control"
                         value=config.diskSize
-                        placeholder=(t "nodeDriver.aliyunecs.diskSize.placeholder")
+                        nullable=true
+                        placeholder=(t "nodeDriver.aliyunecs.dataDiskSize.placeholder" min=dataDiskMin)
                 }}
                 <div class="input-group-addon bg-default">GB</div>
               </div>
