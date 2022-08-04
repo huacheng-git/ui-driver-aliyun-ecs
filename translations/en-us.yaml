@@ -54,12 +54,12 @@ nodeDriver:
       label: System Disk Category
     systemDiskSize:
       label: System Disk Size
-      placeholder: "Disk Capacity: 20 ~ 500"
+      placeholder: "Disk Capacity: {min} ~ 500"
     dataDiskCategory:
       label: Data Disk Category
     dataDiskSize:
       label: Data Disk Size
-      placeholder: "Disk Capacity: 20 ~ 32768"
+      placeholder: "Disk Capacity: {min} ~ 32768"
     resourceGroup:
       label: Resource Group
       all: Account's all Resources

@@ -54,12 +54,12 @@ nodeDriver:
       label: 系統盤種類
     systemDiskSize:
       label: 系統磁碟大小
-      placeholder: "容量範圍: 20 ~ 500"
+      placeholder: "容量範圍: {min} ~ 500"
     dataDiskCategory:
       label: 數據盤種類
     dataDiskSize:
       label: 數據磁碟大小
-      placeholder: "容量範圍: 0 ~ 32768"
+      placeholder: "容量範圍: {min} ~ 32768"
     resourceGroup:
       label: 資源組
       all: 賬號全部資源
