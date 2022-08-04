@@ -332,6 +332,11 @@ export default Ember.Component.extend(NodeDriver, {
         delete this.config.periodUnit;
       }
 
+      if(instanceChargeType === 'PrePaid'){
+        set(this, 'config.spotStrategy', '');
+        set(this, 'config.spotDuration', '0');
+      }
+
       set(this, 'config.instanceChargeType', instanceChargeType);
 
       this.getAvailableInstanceTypes();
