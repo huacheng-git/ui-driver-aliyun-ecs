@@ -1,14 +1,14 @@
-/*!!!!!!!!!!!Do not change anything between here (the DRIVERNAME placeholder will be automatically replaced at buildtime)!!!!!!!!!!!*/
+/* !!!!!!!!!!!Do not change anything between here (the DRIVERNAME placeholder will be automatically replaced at buildtime)!!!!!!!!!!!*/
 import NodeDriver from 'shared/mixins/node-driver';
 
 // do not remove LAYOUT, it is replaced at build time with a base64 representation of the template of the hbs template
 // we do this to avoid converting template to a js file that returns a string and the cors issues that would come along with that
 const LAYOUT;
 const LANGUAGE;
-/*!!!!!!!!!!!DO NOT CHANGE END!!!!!!!!!!!*/
+/* !!!!!!!!!!!DO NOT CHANGE END!!!!!!!!!!!*/
 
 
-/*!!!!!!!!!!!GLOBAL CONST START!!!!!!!!!!!*/
+/* !!!!!!!!!!!GLOBAL CONST START!!!!!!!!!!!*/
 // EMBER API Access - if you need access to any of the Ember API's add them here in the same manner rather then import them via modules, since the dependencies exist in rancher we dont want to expor the modules in the amd def
 const computed     = Ember.computed;
 const observer     = Ember.observer;
@@ -20,7 +20,7 @@ const service      = Ember.inject.service;
 const EmberPromise = Ember.RSVP.Promise;
 const all          = Ember.RSVP.all;
 const next         = Ember.run.next;
-/*!!!!!!!!!!!GLOBAL CONST END!!!!!!!!!!!*/
+/* !!!!!!!!!!!GLOBAL CONST END!!!!!!!!!!!*/
 
 const languages = LANGUAGE;
 const PAGE_SIZE = 50;
@@ -69,44 +69,44 @@ const DEFAULT_INSTANCE_TYPE = 'ecs.g5.large';
 // v2.6.5 => https://www.suse.com/zh-cn/suse-rancher/support-matrix/all-supported-versions/rancher-v2-6-5/
 const IMAGE_VERSIONS = [
   {
-    type: 'CentOS',
+    type:    'CentOS',
     version: '7.7, 7.8, 7.9',
   },
   {
-    type: 'Oracle Linux',
+    type:    'Oracle Linux',
     version: '7.7, 7.9, 8.2, 8.3, 8.4',
   },
   {
-    type: 'RHEL',
+    type:    'RHEL',
     version: '7.7, 7.8, 7.9, 8.2, 8.3, 8.4, 8.5',
   },
   {
-    type: 'Ubuntu',
+    type:    'Ubuntu',
     version: '18.04, 20.04',
   },
   {
-    type: 'Rocky Linux',
+    type:    'Rocky Linux',
     version: '8.4',
   },
   {
-    type: 'openSUSE',
+    type:    'openSUSE',
     version: '15.3',
   },
   {
-    type: 'SLES',
+    type:    'SLES',
     version: '12 SP5,  15 SP1, 15 SP2, 15 SP3',
   },
 ]
 
-/*!!!!!!!!!!!DO NOT CHANGE START!!!!!!!!!!!*/
+/* !!!!!!!!!!!DO NOT CHANGE START!!!!!!!!!!!*/
 export default Ember.Component.extend(NodeDriver, {
-  driverName: '%%DRIVERNAME%%',
+  driverName:     '%%DRIVERNAME%%',
   config:     alias('model.%%DRIVERNAME%%Config'),
   app:        service(),
   router:     service(),
   session:    service(),
 
-  configField:   'aliyunecsConfig',
+  configField:    'aliyunecsConfig',
   zones:          null,
   regions:        null,
   securityGroups: [],
@@ -126,7 +126,7 @@ export default Ember.Component.extend(NodeDriver, {
 
   cloudCredentialDriverName: 'aliyun',
 
-  step:      1,
+  step: 1,
 
   lanChanged:    null,
   refresh:       false,
@@ -134,14 +134,14 @@ export default Ember.Component.extend(NodeDriver, {
   init() {
     // This does on the fly template compiling, if you mess with this :cry:
     const decodedLayout = window.atob(LAYOUT);
-    const template      = Ember.HTMLBars.compile(decodedLayout, {
-      moduleName: 'nodes/components/driver-%%DRIVERNAME%%/template'
-    });
-    set(this,'layout', template);
+    const template      = Ember.HTMLBars.compile(decodedLayout, { moduleName: 'nodes/components/driver-%%DRIVERNAME%%/template' });
+
+    set(this, 'layout', template);
 
     this._super(...arguments);
 
     const lang = get(this, 'session.language');
+
     get(this, 'intl.locale');
     this.loadLanguage(lang);
     let config      = get(this, 'config');
@@ -162,20 +162,17 @@ export default Ember.Component.extend(NodeDriver, {
       });
 
       set(this, 'model.engineInstallURL', 'https://rancher2-drivers.oss-cn-beijing.aliyuncs.com/pandaria/docker-install/19.03-aliyun.sh');
-      set(this,'model.engineStorageDriver', 'overlay2');
+      set(this, 'model.engineStorageDriver', 'overlay2');
       set(this, 'model.%%DRIVERNAME%%Config', config);
     } else {
       this.initInstanceChargeType();
     }
-
   },
-  /*!!!!!!!!!!!DO NOT CHANGE END!!!!!!!!!!!*/
+  /* !!!!!!!!!!!DO NOT CHANGE END!!!!!!!!!!!*/
 
   actions: {
     async alyLogin(cb) {
-      setProperties(this, {
-        'errors':                 null,
-      });
+      setProperties(this, { 'errors': null, });
 
       const errors = [];
       const intl = get(this, 'intl');
@@ -223,7 +220,7 @@ export default Ember.Component.extend(NodeDriver, {
       const spotStrategy = get(this, 'config.spotStrategy');
       const spotPriceLimit = get(this, 'config.spotPriceLimit');
 
-      if(spotStrategy === 'SpotWithPriceLimit' && !spotPriceLimit){
+      if (spotStrategy === 'SpotWithPriceLimit' && !spotPriceLimit){
         set(this, 'config.spotPriceLimit', '0');
       }
 
@@ -325,7 +322,7 @@ export default Ember.Component.extend(NodeDriver, {
         delete this.config.periodUnit;
       }
 
-      if(instanceChargeType === 'PrePaid'){
+      if (instanceChargeType === 'PrePaid'){
         set(this, 'config.spotStrategy', '');
         set(this, 'config.spotDuration', '0');
       }
@@ -340,6 +337,7 @@ export default Ember.Component.extend(NodeDriver, {
 
       if (val) {
         const ary = val.split('_');
+
         if (ary[1]) {
           set(this, 'config.period', ary[0]);
           set(this, 'config.periodUnit', ary[1]);
@@ -354,7 +352,7 @@ export default Ember.Component.extend(NodeDriver, {
       const val = get(this, 'config.spotPriceLimit');
       const newVal = Number(val).toFixed(3);
 
-      if(val !== newVal){
+      if (val !== newVal){
         set(this, 'config.spotPriceLimit', newVal.toString())
       }
     },
@@ -408,10 +406,10 @@ export default Ember.Component.extend(NodeDriver, {
   // Any computed properties or custom logic can go here
   languageDidChanged: observer('intl.locale', function() {
     const lang = get(this, 'intl.locale');
+
     if (lang) {
       this.loadLanguage(lang[0]);
     }
-
   }),
 
   resourceGroupChoicesShouldChange: observer('intl.locale', 'resourceGroups', function() {
@@ -439,7 +437,7 @@ export default Ember.Component.extend(NodeDriver, {
     const resourceGroupId = get(this, 'config.resourceGroupId');
     const externalParams = {
       regionId: get(this, 'config.region'),
-      vpcId: get(this, 'config.vpcId')
+      vpcId:    get(this, 'config.vpcId')
     };
 
     if (!!resourceGroupId && resourceGroupId !== '') {
@@ -507,14 +505,14 @@ export default Ember.Component.extend(NodeDriver, {
 
       const securityGroupsPromise = this.fetch('SecurityGroup', 'SecurityGroups', externalParams);
 
-      if(securityGroupsPromise === undefined) {
+      if (securityGroupsPromise === undefined) {
         return;
       }
 
       securityGroupsPromise.then((securityGroups) => {
         const out = [];
 
-        securityGroups.forEach(obj=>{
+        securityGroups.forEach((obj) => {
           const label = `${ obj.raw.SecurityGroupName } (${ obj.value })`;
 
           out.push({
@@ -552,9 +550,7 @@ export default Ember.Component.extend(NodeDriver, {
     const intl = get(this, 'intl');
     const region = get(this, 'config.region');
     const resourceGroupId = get(this, 'config.resourceGroupId');
-    const externalParams = {
-      regionId: region,
-    };
+    const externalParams = { regionId: region, };
 
     if (!!resourceGroupId && resourceGroupId !== '') {
       externalParams.ResourceGroupId = resourceGroupId;
@@ -635,7 +631,7 @@ export default Ember.Component.extend(NodeDriver, {
     }
   }),
 
-  instanceTypeDidChange:observer('config.instanceType', function() {
+  instanceTypeDidChange: observer('config.instanceType', function() {
     this.loadImages();
     this.fetchAvailableSystemDisks();
     this.fetchAvailabelDataDisks();
@@ -643,19 +639,18 @@ export default Ember.Component.extend(NodeDriver, {
 
   systemDiskDidChange: observer('config.systemDiskCategory', function() {
     this.fetchAvailabelDataDisks();
-    if(get(this, 'config.systemDiskCategory') === 'cloud_auto' && get(this, 'config.systemDiskSize') < 40){
+    if (get(this, 'config.systemDiskCategory') === 'cloud_auto' && get(this, 'config.systemDiskSize') < 40){
       set(this, 'config.systemDiskSize', '40');
     }
   }),
 
   diskCategoryDidChange: observer('config.diskCategory', function() {
-    if( !get(this, 'config.diskSize') ||  get(this, 'config.diskSize') === '0'){
+    if ( !get(this, 'config.diskSize') ||  get(this, 'config.diskSize') === '0'){
       return;
     }
-    if(get(this, 'config.diskCategory') === 'cloud_auto' && get(this, 'config.diskSize') < 40){
+    if (get(this, 'config.diskCategory') === 'cloud_auto' && get(this, 'config.diskSize') < 40){
       set(this, 'config.diskSize', '40');
     }
-
   }),
 
   systemDiskMin: computed('config.systemDiskCategory', function() {
@@ -671,6 +666,7 @@ export default Ember.Component.extend(NodeDriver, {
 
   watchSpotStrategy: observer('config.spotStrategy', function() {
     const spotStrategy = get(this, 'config.spotStrategy');
+
     if ( spotStrategy === 'SpotAsPriceGo' ) {
       delete this.config.spotPriceLimit;
     }
@@ -700,6 +696,7 @@ export default Ember.Component.extend(NodeDriver, {
   periodUnitOptions: computed('intl.locale', function() {
     const intl = get(this, 'intl');
     const out = [];
+
     PERIDO_WEEK.forEach((item) => {
       out.push({
         label: `${ item }${ intl.t('nodeDriver.aliyunecs.periodUnit.week') }`,
@@ -709,10 +706,12 @@ export default Ember.Component.extend(NodeDriver, {
     PERIOD_MONTH.forEach((item) => {
       const month = Number(item);
       let label = '';
+
       if (month === 6) {
         label = `${ intl.t('nodeDriver.aliyunecs.periodUnit.half') } ${ intl.t('nodeDriver.aliyunecs.periodUnit.year') }`;
       } else if (month % 12 === 0) {
         const year = month / 12;
+
         label = `${ year } ${ intl.t('nodeDriver.aliyunecs.periodUnit.year') }`;
       } else {
         label = `${ item } ${ intl.t('nodeDriver.aliyunecs.periodUnit.month') }`;
@@ -722,6 +721,7 @@ export default Ember.Component.extend(NodeDriver, {
         value: `${ item }_Month`
       });
     });
+
     return out;
   }),
 
@@ -738,36 +738,35 @@ export default Ember.Component.extend(NodeDriver, {
   }),
 
   regionShowValue: computed('intl.locale', 'config.region', 'regions.[]', function() {
-    const regionId = get(this,'config.region');
+    const regionId = get(this, 'config.region');
     const regions = get(this, 'regions') || [];
 
     if (regionId && regions.length > 0) {
-       return get(regions.findBy('value', regionId), 'label')
+      return get(regions.findBy('value', regionId), 'label')
     } else {
       return ''
     }
   }),
 
   instanceChargeTypeShowValue: computed('intl.locale', 'config.instanceChargeType', function() {
-    const instanceChargeType = get(this,'instanceChargeType');
+    const instanceChargeType = get(this, 'instanceChargeType');
     const instanceChargeTypeOptions = get(this, 'instanceChargeTypeOptions') || [];
 
     return instanceChargeType ? get(instanceChargeTypeOptions.findBy('value', instanceChargeType), 'label') : '';
   }),
   periodUnitShowValue: computed('intl.locale', 'config.period', 'config.periodUnit', function() {
-
-    const periodUnit = get(this,'periodUnit');
+    const periodUnit = get(this, 'periodUnit');
     const periodUnitOptions = get(this, 'periodUnitOptions') || [];
 
     return periodUnit ? get(periodUnitOptions.findBy('value', periodUnit), 'label') : '';
   }),
 
   zoneShowValue: computed('intl.locale', 'config.zone', 'zones.[]', function() {
-    const zoneId = get(this,'config.zone');
+    const zoneId = get(this, 'config.zone');
     const zones = get(this, 'zones') || [];
 
     if (zoneId && zones.length > 0) {
-       return get(zones.findBy('value', zoneId), 'raw.LocalName')
+      return get(zones.findBy('value', zoneId), 'raw.LocalName')
     } else {
       return ''
     }
@@ -857,7 +856,7 @@ export default Ember.Component.extend(NodeDriver, {
       return {
         label: `${ group.raw.DisplayName } (${ group.raw.Id })`,
         value: group.raw.Id,
-        raw: group.raw
+        raw:   group.raw
       };
     }));
   },
@@ -867,7 +866,7 @@ export default Ember.Component.extend(NodeDriver, {
 
     if (get(this, 'intl.locale')[0] === 'en-us') {
       AcceptLanguage = 'en-US';
-    };
+    }
 
     const regions = await this.fetch('Region', 'Regions', { AcceptLanguage });
 
@@ -995,7 +994,7 @@ export default Ember.Component.extend(NodeDriver, {
     const results = [];
     const zones = res['AvailableZones'];
 
-    if(!zones){
+    if (!zones){
       return results;
     }
 
@@ -1015,9 +1014,9 @@ export default Ember.Component.extend(NodeDriver, {
   loadImages(cb) {
     const resourceGroupId = get(this, 'config.resourceGroupId');
     const externalParams = {
-      regionId: get(this, 'config.region'),
-      instanceType: get(this, 'config.instanceType'),
-      imageOwnerAlias: 'system',
+      regionId:             get(this, 'config.region'),
+      instanceType:         get(this, 'config.instanceType'),
+      imageOwnerAlias:      'system',
       isSupportIoOptimized: true
     };
 
@@ -1029,11 +1028,11 @@ export default Ember.Component.extend(NodeDriver, {
       .then((images) => {
         const out = [];
 
-        images.forEach(obj=>{
-          if(obj.raw.OSType === 'linux'){
+        images.forEach((obj) => {
+          if (obj.raw.OSType === 'linux'){
             const versions = this.availableImageVersions(obj.raw.Platform);
 
-            if(versions.find(v => obj.raw.OSName.indexOf(v) !== -1)){
+            if (versions.find((v) => obj.raw.OSName.indexOf(v) !== -1)){
               out.push({
                 label: obj.raw.ImageOwnerAlias === 'system' ? obj.raw.OSName : obj.raw.ImageName,
                 value: obj.value,
@@ -1079,12 +1078,13 @@ export default Ember.Component.extend(NodeDriver, {
 
   fetch(resource, plural, externalParams = {}, page = 1) {
     let resourceName = '';
-    if(resource){
+
+    if (resource){
       resourceName = this.toLowerCaseInitial(resource);
     } else {
       resourceName  = this.toLowerCaseInitial(plural)
     }
-    if(resourceName === 'vSwitch'){
+    if (resourceName === 'vSwitch'){
       resourceName = 'vswitch'
     }
 
@@ -1092,7 +1092,7 @@ export default Ember.Component.extend(NodeDriver, {
 
     if (get(this, 'intl.locale.firstObject') === 'en-us') {
       acceptLanguage = 'en-US';
-    };
+    }
 
     const cloudCredentialId = get(this, 'primaryResource.cloudCredentialId')
 
@@ -1100,7 +1100,7 @@ export default Ember.Component.extend(NodeDriver, {
     const location = window.location;
     let req = {};
 
-    const url = `${location.origin}/meta/ack/${resourceName}`
+    const url = `${ location.origin }/meta/ack/${ resourceName }`
     const query = Object.assign({}, externalParams, {
       cloudCredentialId,
       acceptLanguage,
@@ -1110,12 +1110,12 @@ export default Ember.Component.extend(NodeDriver, {
     query.pageNumber = page;
 
     req = {
-      url:     `${url}?${this.getQueryParamsString(query)}`,
+      url:     `${ url }?${ this.getQueryParamsString(query) }`,
       method:  'GET',
     };
 
     return new EmberPromise((resolve, reject) => {
-      if(!cloudCredentialId){
+      if (!cloudCredentialId){
         return resolve(results);
       }
 
@@ -1191,7 +1191,7 @@ export default Ember.Component.extend(NodeDriver, {
   },
 
   upperFirst(string){
-    return string.slice(0,1).toUpperCase() + string.slice(1);
+    return string.slice(0, 1).toUpperCase() + string.slice(1);
   },
 
   getAvailableInstanceTypes() {
@@ -1204,7 +1204,7 @@ export default Ember.Component.extend(NodeDriver, {
         }
       }));
 
-      if(!availableResources.includes(get(this, 'config.instanceType'))){
+      if (!availableResources.includes(get(this, 'config.instanceType'))){
         set(this, 'config.instanceType', '');
       }
     });
@@ -1212,6 +1212,7 @@ export default Ember.Component.extend(NodeDriver, {
 
   initInstanceChargeType(){
     let instanceChargeType = get(this, 'config.instanceChargeType');
+
     if (instanceChargeType === 'PrePaid') {
       set(this, 'periodUnit', `${ get(this, 'config.period') }_${ get(this, 'config.periodUnit') }`);
     }
@@ -1222,9 +1223,9 @@ export default Ember.Component.extend(NodeDriver, {
   },
 
   availableImageVersions(type){
-    const support = this.imageVersions.find(obj => obj.type === type);
+    const support = this.imageVersions.find((obj) => obj.type === type);
 
-    if(support){
+    if (support){
       return support.version.split(',');
     }
 
