@@ -10,7 +10,7 @@ const pkg = require('./package.json');
 const fs = require('fs');
 const replaceString = require('replace-string');
 const yaml          = require('gulp-yaml');
-
+const jsoncombine   = require('gulp-jsoncombine');
 
 const NAME_TOKEN = '%%DRIVERNAME%%';
 
@@ -28,12 +28,16 @@ if (!DRIVER_NAME) {
   process.exit(1);
 }
 
-gulp.task('watch', function () {
-  gulp.watch(['./component/*.js', './component/*.hbs', './component/*.css'], gulp.parallel('build'));
-});
-
 gulp.task('clean', function () {
   return gulp.src([`${DIST}*.js`, `${DIST}*.css`, `${DIST}*.hbs`, `${TMP}*.js`, `${TMP}*.css`, `${TMP}*.hbs`,], { read: false })
+    .pipe(clean());
+});
+gulp.task('cleanJson', function () {
+  return gulp.src([`${DIST}*.json`, `${TMP}*.json`], {read: false})
+    .pipe(clean());
+});
+gulp.task('cleanTrans', function () {
+  return gulp.src([`${DIST}${TRANSLATIONS}*.json`, `${TMP}${TRANSLATIONS}*.json`], {read: false})
     .pipe(clean());
 });
 
@@ -51,7 +55,17 @@ gulp.task('assets', gulp.series('styles', function () {
     .pipe(gulp.dest(DIST));
 }));
 
-gulp.task('babel', gulp.series('assets', function () {
+gulp.task('languages', gulp.series('cleanJson', function() {
+  return gulp.src(TRANSLATIONS + '*.yaml')
+    .pipe(replace(NAME_TOKEN, DRIVER_NAME))
+    .pipe(yaml({ safe: true }))
+    .pipe(jsoncombine('translations.json', function(data){
+      return new Buffer(JSON.stringify(data));
+   }))
+    .pipe(gulp.dest(DIST));
+}));
+
+gulp.task('babel', gulp.series('assets', 'languages', function () {
   const babelOpts = {
     presets: [
       [
@@ -73,6 +87,7 @@ gulp.task('babel', gulp.series('assets', function () {
     moduleId: `nodes/components/driver-${DRIVER_NAME}/component`
   }
 
+  const translations = fs.readFileSync(`${DIST}translations.json`, 'utf8');
   let hbs = fs.readFileSync(`${BASE}template.hbs`, 'utf8');
 
   hbs = replaceString(hbs, NAME_TOKEN, DRIVER_NAME);
@@ -83,6 +98,7 @@ gulp.task('babel', gulp.series('assets', function () {
     `${BASE}component.js`
   ])
     .pipe(replace('const LAYOUT;', `const LAYOUT = "${hbs}";`))
+    .pipe(replace('const LANGUAGE;', `const LANGUAGE = ${ translations };`))
     .pipe(replace(NAME_TOKEN, DRIVER_NAME))
     .pipe(babel(babelOpts))
     .pipe(gulpConcat(`component.js`, { newLine: ';\n' }))
@@ -129,6 +145,10 @@ gulp.task('compile', gulp.series('rexport', function () {
 
 gulp.task('build', gulp.series('compile'));
 
+gulp.task('watch', function () {
+  gulp.watch(['./component/*.js', './component/*.hbs', './component/*.css', `./${ TRANSLATIONS }*.yaml`],  gulp.parallel('build'));
+});
+
 gulp.task('server', gulp.parallel(['build', 'watch'], function () {
   return gulpConnect.server({
     root: [DIST],
@@ -139,11 +159,7 @@ gulp.task('server', gulp.parallel(['build', 'watch'], function () {
 
 gulp.task('default', gulp.series('build'));
 
-gulp.task('watch', function () {
-  gulp.watch(['./component/*.js', './component/*.hbs', './component/*.css'], gulp.parallel('build'));
-});
-
-gulp.task('translations', gulp.series('clean', function() {
+gulp.task('translations', gulp.series('cleanTrans', function() {
   return gulp.src(TRANSLATIONS + '*.yaml')
     .pipe(replace(NAME_TOKEN, DRIVER_NAME))
     .pipe(yaml({ safe: true }))
