@@ -28,6 +28,13 @@ nodeDriver:
     internetMaxBandwidth:
       label: 最大網路帶寬
       placeholder: 1到200
+    dockerPort:
+      label: Docker 埠
+      placeholder: '2376'
+    openPort:
+      label: 開放埠
+      placeholder: '逗號分隔，例如: 80,443'
+      error: 開放埠格式錯誤，{match}。
     aliyunSLB:
       label: 阿里雲SLB ID
       placeholder: 阿里雲SLB ID
@@ -104,6 +111,7 @@ nodeDriver:
       placeholder: 安全組
       prompt: 選擇安全組...
       defaultCreate: "自動創建<code>{groupName}</code>安全組。"
+      openPorts: 當使用一個現有的 NSG 時，開放埠将被忽略。
     sshPassword:
       label: SSH密碼
       placeholder: '創建實例後SSH遠程登錄密碼(非必填)'

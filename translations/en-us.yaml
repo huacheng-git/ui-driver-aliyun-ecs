@@ -28,6 +28,13 @@ nodeDriver:
     internetMaxBandwidth:
       label: Internet Max Bandwidth
       placeholder: 1 to 200
+    dockerPort:
+      label: Docker Port
+      placeholder: '2376'
+    openPort:
+      label: Open Port
+      placeholder: 'Comma-separated, e.g. 80,443'
+      error: Open port format error，{match}。
     aliyunSLB:
       label: Aliyun SLB ID
       placeholder: Aliyun SLB ID
@@ -104,6 +111,7 @@ nodeDriver:
       placeholder: Security Group
       prompt: Choose a Security Group...
       defaultCreate: "Automatically create a <code>{groupName}</code> group"
+      openPorts: When using an existing NSG, Open Ports are ignored.
     sshPassword:
       label: SSH Password
       placeholder: Set Instance SSH Password (Optional)

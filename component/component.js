@@ -98,6 +98,8 @@ const IMAGE_VERSIONS = [
   },
 ]
 
+const OPEN_PORT = ['6443/tcp', '2379/tcp', '2380/tcp', '8472/udp', '4789/udp', '9796/tcp', '10256/tcp', '10250/tcp', '10251/tcp', '10252/tcp'];
+
 /* !!!!!!!!!!!DO NOT CHANGE START!!!!!!!!!!!*/
 export default Ember.Component.extend(NodeDriver, {
   driverName:     '%%DRIVERNAME%%',
@@ -167,6 +169,9 @@ export default Ember.Component.extend(NodeDriver, {
     } else {
       this.initInstanceChargeType();
     }
+
+    set(this, 'openPorts', this.initOpenPorts(get(this, 'config.openPort') || OPEN_PORT));
+    this.openPortsDidChange();
   },
   /* !!!!!!!!!!!DO NOT CHANGE END!!!!!!!!!!!*/
 
@@ -212,6 +217,14 @@ export default Ember.Component.extend(NodeDriver, {
       const errors = get(this, 'errors') || [];
       const intl = get(this, 'intl');
       const imageId = get(this, 'config.imageId');
+      const openPorts = get(this, 'config.openPort');
+      const openPortReg = /^[0-9]+(\/(tcp|udp|all|icmp|gre))?$/;
+
+      if(openPorts && openPorts.length){
+        if(openPorts.find(item=>!openPortReg.test(item))){
+          errors.push(intl.t('nodeDriver.aliyunecs.openPort.error', {match: openPortReg}));
+        }
+      }
 
       if ( !imageId ) {
         errors.push(intl.t('nodeDriver.aliyunecs.errors.imageIdRequired'));
@@ -525,14 +538,6 @@ export default Ember.Component.extend(NodeDriver, {
         set(this, 'securityGroups', out);
 
         const selectedSecurityGroup = get(this, 'config.securityGroup');
-
-        if (selectedSecurityGroup) {
-          const found = out.findBy('value', selectedSecurityGroup);
-
-          if (!found) {
-            set(this, 'config.securityGroup', 'docker-machine');
-          }
-        }
       });
     } else {
       set(this, 'config.vswitchId', null);
@@ -651,6 +656,17 @@ export default Ember.Component.extend(NodeDriver, {
     if (get(this, 'config.diskCategory') === 'cloud_auto' && get(this, 'config.diskSize') < 40){
       set(this, 'config.diskSize', '40');
     }
+  }),
+
+  openPortsDidChange: observer('openPorts', function() {
+    let str = (get(this, 'openPorts') || '').trim();
+    let ary = [];
+
+    if (str.length) {
+      ary = str.split(/\s*,\s*/);
+    }
+
+    set(this, 'config.openPort', ary);
   }),
 
   systemDiskMin: computed('config.systemDiskCategory', function() {
@@ -796,12 +812,22 @@ export default Ember.Component.extend(NodeDriver, {
     const securityGroups = get(this, 'securityGroups');
     const securityGroup = get(this, 'config.securityGroup');
 
+    if(!securityGroup){
+      set(this, 'config.securityGroup', 'docker-machine');
+    }
+
     if (securityGroup === 'docker-machine') {
       return securityGroup
     }
 
     if (securityGroups && securityGroups.length > 0 && securityGroup) {
-      return get(securityGroups.findBy('value', securityGroup), 'label');
+      const current = securityGroups.findBy('value', securityGroup);
+
+      if(current){
+        return get(current, 'label');
+      } else {
+        return securityGroup
+      }
     } else {
       return '';
     }
@@ -1230,5 +1256,9 @@ export default Ember.Component.extend(NodeDriver, {
     }
 
     return [];
-  }
+  },
+
+  initOpenPorts(ports) {
+    return ports ? ports.join(',') : '';
+  },
 });

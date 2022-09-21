@@ -119,12 +119,12 @@
               {{t "nodeDriver.aliyunecs.securityGroup.label"}}
             </label>
             {{#input-or-display editable=(eq step 2) value=securityGroupShowValue}}
-              {{new-select
-                      classNames="form-control"
-                      content=securityGroups
-                      value=config.securityGroup
-                      prompt="nodeDriver.aliyunecs.securityGroup.prompt"
-                      localizedPrompt=true
+              {{searchable-select
+                allowCustom=true
+                value=config.securityGroup
+                content=securityGroups
+                prompt="nodeDriver.aliyunecs.securityGroup.prompt"
+                localizedPrompt=true
               }}
               {{#if (or (not config.securityGroup) (eq config.securityGroup "docker-machine"))}}
                 <p class="help-block">
@@ -364,6 +364,24 @@
         </div>
 
         <div class="row">
+          <div class="col span-6">
+            <label class="acc-label">
+              {{t "nodeDriver.aliyunecs.openPort.label"}}
+            </label>
+            {{#input-or-display class="break-all" editable=(eq step 3) value=config.openPort}}
+              {{input
+                type="text"
+                value=openPorts
+                classNames="form-control"
+                placeholder=(t "nodeDriver.aliyunecs.openPort.placeholder")
+              }}
+
+              <p class="help-block">
+                {{t "nodeDriver.aliyunecs.securityGroup.openPorts"}}
+              </p>
+            {{/input-or-display}}
+          </div>
+
           <div class="col span-6">
             <label class="acc-label">
               {{t "nodeDriver.aliyunecs.aliyunSLB.label"}}
