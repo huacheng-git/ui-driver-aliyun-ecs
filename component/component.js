@@ -115,6 +115,7 @@ export default Ember.Component.extend(NodeDriver, {
   images:         null,
   instanceTypes:  null,
 
+  securityGroupId:      null,
   allInstanceTypes:     null,
   resourceGroups:       null,
   resourceGroupChoices: null,
@@ -172,6 +173,7 @@ export default Ember.Component.extend(NodeDriver, {
 
     set(this, 'openPorts', this.initOpenPorts(get(this, 'config.openPort') || OPEN_PORT));
     this.openPortsDidChange();
+    this.initSecurityGroupId();
   },
   /* !!!!!!!!!!!DO NOT CHANGE END!!!!!!!!!!!*/
 
@@ -417,6 +419,12 @@ export default Ember.Component.extend(NodeDriver, {
   },
 
   // Any computed properties or custom logic can go here
+  securityGroupIdDidChanged: observer('securityGroupId', function() {
+    const id = get(this, 'securityGroupId');
+    const securityGroup = this.securityGroups.find(s=>s.value === id);
+
+    this.config.securityGroup = securityGroup ? get(securityGroup, 'raw.SecurityGroupName') : id;
+  }),
   languageDidChanged: observer('intl.locale', function() {
     const lang = get(this, 'intl.locale');
 
@@ -530,20 +538,19 @@ export default Ember.Component.extend(NodeDriver, {
 
           out.push({
             ...obj,
-            value: obj.raw.SecurityGroupName,
+            value: obj.raw.SecurityGroupId,
             label
           })
         });
 
         set(this, 'securityGroups', out);
-
-        const selectedSecurityGroup = get(this, 'config.securityGroup');
+        this.initSecurityGroupId();
       });
     } else {
       set(this, 'config.vswitchId', null);
       set(this, 'vswitches', []);
       set(this, 'securityGroups', []);
-      set(this, 'config.securityGroup', 'docker-machine');
+      set(this, 'securityGroupId', 'docker-machine');
     }
   }),
 
@@ -1246,6 +1253,12 @@ export default Ember.Component.extend(NodeDriver, {
       instanceChargeType = 'SpotStrategy';
     }
     set(this, 'instanceChargeType', instanceChargeType);
+  },
+  initSecurityGroupId(){
+    const name = get(this, 'config.securityGroup');
+    const securityGroup = get(this, 'securityGroups').find(s=>s.raw.SecurityGroupName === name)
+
+    set(this, 'securityGroupId', securityGroup ? get(securityGroup, 'value') : 'docker-machine');
   },
 
   availableImageVersions(type){
