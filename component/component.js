@@ -423,7 +423,11 @@ export default Ember.Component.extend(NodeDriver, {
     const id = get(this, 'securityGroupId');
     const securityGroup = this.securityGroups.find(s=>s.value === id);
 
-    this.config.securityGroup = securityGroup ? get(securityGroup, 'raw.SecurityGroupName') : id;
+    if(securityGroup){
+      set(this, 'config.securityGroup', get(securityGroup, 'raw.SecurityGroupName'));
+    } else {
+      set(this, 'config.securityGroup', id);
+    }
   }),
   languageDidChanged: observer('intl.locale', function() {
     const lang = get(this, 'intl.locale');
@@ -818,26 +822,16 @@ export default Ember.Component.extend(NodeDriver, {
   securityGroupShowValue: computed('intl.locale', 'config.securityGroup', 'securityGroups.[]', function() {
     const securityGroups = get(this, 'securityGroups');
     const securityGroup = get(this, 'config.securityGroup');
+    let displayName = 'docker-machine';
 
-    if(!securityGroup){
-      set(this, 'config.securityGroup', 'docker-machine');
-    }
-
-    if (securityGroup === 'docker-machine') {
-      return securityGroup
-    }
-
-    if (securityGroups && securityGroups.length > 0 && securityGroup) {
-      const current = securityGroups.findBy('value', securityGroup);
-
-      if(current){
-        return get(current, 'label');
-      } else {
-        return securityGroup
+    if(securityGroup && securityGroups && securityGroups.length){
+      const current = securityGroups.find(s=>s.raw.SecurityGroupName === securityGroup) || {};
+      if(current.label){
+        displayName = current.label;
       }
-    } else {
-      return '';
     }
+
+    return displayName;
   }),
 
   resourceGroupShowValue: computed('intl.locale', 'config.resourceGroupId', 'resourceGroupChoices.[]', function() {
