@@ -126,12 +126,12 @@
                 prompt="nodeDriver.aliyunecs.securityGroup.prompt"
                 localizedPrompt=true
               }}
-              {{#if (or (not config.securityGroup) (eq config.securityGroup "docker-machine"))}}
+              {{#if (or (not securityGroupId) (eq config.securityGroup "docker-machine"))}}
                 <p class="help-block">
                   {{t
-                          "nodeDriver.aliyunecs.securityGroup.defaultCreate"
-                          groupName="docker-machine"
-                          htmlSafe=true
+                    "nodeDriver.aliyunecs.securityGroup.defaultCreate"
+                    groupName="docker-machine"
+                    htmlSafe=true
                   }}
                 </p>
               {{/if}}
