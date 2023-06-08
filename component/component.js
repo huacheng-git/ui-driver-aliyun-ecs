@@ -124,8 +124,7 @@ export default Ember.Component.extend(NodeDriver, {
 
   systemDiskChoices: [],
   dataDiskChoices:   [],
-  imageVersions:     IMAGE_VERSIONS,
-
+  imageType:         '',
 
   cloudCredentialDriverName: 'aliyun',
 
@@ -159,9 +158,9 @@ export default Ember.Component.extend(NodeDriver, {
         systemDiskSize:       '40',
         diskSize:             '0',
         resourceGroupId:      '',
-        instanceChargeType:   '',
+        instanceChargeType:   'PostPaid',
         spotDuration:         '1',
-        spotStrategy:         'SpotAsPriceGo',
+        spotStrategy:         'NoSpot',
       });
 
       set(this, 'model.engineInstallURL', 'https://rancher2-drivers.oss-cn-beijing.aliyuncs.com/pandaria/docker-install/19.03-aliyun.sh');
@@ -324,25 +323,20 @@ export default Ember.Component.extend(NodeDriver, {
       let instanceChargeType = get(this, 'instanceChargeType');
 
       if (instanceChargeType === 'SpotStrategy') {
-        instanceChargeType = 'PostPaid'
+        set(this, 'config.instanceChargeType', 'PostPaid');
         set(this, 'config.spotDuration', '1');
         set(this, 'config.spotStrategy', 'SpotAsPriceGo');
       } else {
+        set(this, 'config.instanceChargeType', instanceChargeType);
         set(this, 'config.spotStrategy', 'NoSpot');
         delete this.config.spotDuration;
         delete this.config.spotPriceLimit;
-      }
-      if (instanceChargeType === 'PostPaid') {
-        delete this.config.period;
-        delete this.config.periodUnit;
       }
 
       if (instanceChargeType === 'PrePaid'){
         set(this, 'config.spotStrategy', '');
         set(this, 'config.spotDuration', '0');
       }
-
-      set(this, 'config.instanceChargeType', instanceChargeType);
 
       this.getAvailableInstanceTypes();
     },
@@ -419,6 +413,11 @@ export default Ember.Component.extend(NodeDriver, {
   },
 
   // Any computed properties or custom logic can go here
+  imageTypeChangeed: observer('imageType', function() {
+    const imageType = get(this, 'imageType');
+
+    set(this, 'config.imageId', get(this, `images.${imageType}.firstObject.value`));
+  }),
   securityGroupIdDidChanged: observer('securityGroupId', function() {
     const id = get(this, 'securityGroupId');
     const securityGroup = this.securityGroups.find(s=>s.value === id);
@@ -697,6 +696,16 @@ export default Ember.Component.extend(NodeDriver, {
     if ( spotStrategy === 'SpotAsPriceGo' ) {
       delete this.config.spotPriceLimit;
     }
+  }),
+
+  imageVersionChoose: computed('imageType', 'images', function() {
+    const imageType = get(this, 'imageType');
+    const images = get(this, 'images');
+    if(!imageType || !images){
+      return [];
+    }
+
+    return images[imageType];
   }),
 
   internetChargeTypes: computed('intl.locale', function() {
@@ -1039,6 +1048,7 @@ export default Ember.Component.extend(NodeDriver, {
   },
 
   loadImages(cb) {
+    const intl = get(this, 'intl');
     const resourceGroupId = get(this, 'config.resourceGroupId');
     const externalParams = {
       regionId:             get(this, 'config.region'),
@@ -1053,33 +1063,52 @@ export default Ember.Component.extend(NodeDriver, {
 
     this.fetch('Image', 'Images', externalParams)
       .then((images) => {
-        const out = [];
+        const out = {};
 
         images.forEach((obj) => {
           if (obj.raw.OSType === 'linux'){
-            const versions = this.availableImageVersions(obj.raw.Platform);
-
-            if (versions.find((v) => obj.raw.OSName.indexOf(v) !== -1)){
-              out.push({
-                label: obj.raw.ImageOwnerAlias === 'system' ? obj.raw.OSName : obj.raw.ImageName,
-                value: obj.value,
-                raw:   obj.raw,
-              });
+            if(!out[obj.raw.Platform]){
+              out[obj.raw.Platform] = []
             }
+
+            out[obj.raw.Platform].push({
+              label: obj.raw.ImageOwnerAlias === 'system' ? obj.raw.OSName : obj.raw.ImageName,
+              value: obj.value,
+              raw:   obj.raw,
+            });
           }
         });
 
-        set(this, 'images', out.sortBy('label').reverse());
+        set(this, 'images', out);
 
+        const imageTypeChoose = Object.keys(out).map(key=>{
+          return {
+            label: key,
+            value: key
+          }
+        })
+
+        set(this, 'imageTypeChoose', imageTypeChoose);
+
+        const imageType = get(this, 'imageType');
         const imageId = get(this, 'config.imageId');
-        let found = get(this, 'images').findBy('value', imageId);
 
-        if (!found ) {
-          const ubuntu = get(this, 'images').find((i) => get(i, 'value').startsWith(DEFAULT_IMAGE));
-          const defaultImage = ubuntu ? ubuntu.value : get(this, 'images.firstObject.value');
-
-          set(this, 'config.imageId', defaultImage);
+        if(!imageType){
+          set(this, 'imageType', imageTypeChoose.firstObject.value)
         }
+        if(!imageId){
+          set(this, 'config.imageId', out[imageTypeChoose.firstObject.value].firstObject.value)
+        } else {
+          const found = images.findBy('value', imageId);
+
+          if (!found ) {
+            set(this, 'imageType', imageTypeChoose.firstObject.value)
+            set(this, 'config.imageId', out[imageTypeChoose.firstObject.value].firstObject.value)
+          } else {
+            set(this, 'imageType', found.raw.Platform);
+          }
+        }
+        
         if (cb) {
           set(this, 'step', 3);
           cb();
@@ -1253,16 +1282,6 @@ export default Ember.Component.extend(NodeDriver, {
     const securityGroup = get(this, 'securityGroups').find(s=>s.raw.SecurityGroupName === name)
 
     set(this, 'securityGroupId', securityGroup ? get(securityGroup, 'value') : 'docker-machine');
-  },
-
-  availableImageVersions(type){
-    const support = this.imageVersions.find((obj) => obj.type === type);
-
-    if (support){
-      return support.version.split(',');
-    }
-
-    return [];
   },
 
   initOpenPorts(ports) {

@@ -316,10 +316,10 @@
               {{t "nodeDriver.aliyunecs.instanceType.label"}}
             </label>
           {{#input-or-display editable=(eq step 3) value=config.instanceType}}
-            {{new-select
-                    classNames="form-control"
-                    content=instanceTypes
-                    value=config.instanceType
+            {{searchable-select
+              allowCustom=false
+              value=config.instanceType
+              content=instanceTypes
             }}
           {{/input-or-display}}
           </div>
@@ -330,37 +330,31 @@
             <label class="acc-label">
               {{t "nodeDriver.aliyunecs.systemImage.label"}}{{field-required}}
             </label>
-            {{#input-or-display editable=(eq step 3) value=config.imageId}}
+            {{#input-or-display editable=(eq step 3) value=imageType}}
             {{new-select
-                    classNames="form-control"
-                    content=images
-                    optionValuePath="value"
-                    value=config.imageId
+              classNames="form-control"
+              content=imageTypeChoose
+              optionValuePath="value"
+              value=imageType
+              placeholder=(t "nodeDriver.aliyunecs.systemImage.placeholder")
             }}
             {{/input-or-display}}
           </div>
-          {{#if (not config.privateAddressOnly)}}
+
           <div class="col span-6">
             <label class="acc-label">
-              {{t "nodeDriver.aliyunecs.internetMaxBandwidth.label"}}
+              {{t "nodeDriver.aliyunecs.systemImageVersion.label"}}{{field-required}}
             </label>
-            <div class="input-group">
-              {{#if (eq step 3)}}
-                {{input-integer
-                        min=1
-                        max=200
-                        class="form-control"
-                        value=config.internetMaxBandwidth
-                        placeholder=(t "nodeDriver.aliyunecs.internetMaxBandwidth.placeholder")
-                }}
-                <div class="input-group-addon bg-default">Mbps</div>
-              {{else}}
-                {{config.internetMaxBandwidth}} Mbps
-              {{/if}}
-
-            </div>
+            {{#input-or-display editable=(eq step 3) value=config.imageId}}
+            {{new-select
+              classNames="form-control"
+              content=imageVersionChoose
+              optionValuePath="value"
+              value=config.imageId
+              placeholder=(t "nodeDriver.aliyunecs.systemImageVersion.placeholder")
+            }}
+            {{/input-or-display}}
           </div>
-          {{/if}}
         </div>
 
         <div class="row">
@@ -395,6 +389,30 @@
             }}
             {{/input-or-display}}
           </div>
+        </div>
+
+        <div class="row">
+          {{#if (not config.privateAddressOnly)}}
+          <div class="col span-6">
+            <label class="acc-label">
+              {{t "nodeDriver.aliyunecs.internetMaxBandwidth.label"}}
+            </label>
+            <div class="input-group">
+              {{#if (eq step 3)}}
+                {{input-integer
+                        min=1
+                        max=200
+                        class="form-control"
+                        value=config.internetMaxBandwidth
+                        placeholder=(t "nodeDriver.aliyunecs.internetMaxBandwidth.placeholder")
+                }}
+                <div class="input-group-addon bg-default">Mbps</div>
+              {{else}}
+                {{config.internetMaxBandwidth}} Mbps
+              {{/if}}
+            </div>
+          </div>
+          {{/if}}
         </div>
 
         <div class="row">
